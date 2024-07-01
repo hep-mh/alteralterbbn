@@ -66,22 +66,28 @@ int main(int argc, char **argv) {
         }
     }
 
-    // Run the calculatio
+    // Run the calculation
     double Y0[NNUC+1], Y0_high[NNUC+1],Y0_low[NNUC+1];
 
     bbn_abundances(0, params, Y0);
     bbn_abundances(1, params, Y0_high);
     bbn_abundances(2, params, Y0_low);
 
-    // Print the results to screen
+    // Print the results to the screen
     for ( int i = 1; i < 10; i++ ) {
         printf("%.6e %.6e %.6e\n", Y0[i], Y0_high[i], Y0_low[i]);
     }
 
-    // Save the results to an abundance-file
-    // if requested
+    // If a filename was provided, also save the results
+    // to the specified abundance-file
     if ( strcmp(abundance_file, "") != 0 ) {
         FILE* file = fopen(abundance_file, "w");
+
+        if ( file == NULL ) {
+            perror("Could not open the provided abundance-file. Exit!");
+
+            exit(1);
+        }
 
         for ( int i = 1; i < 10; i++ ) {
             fprintf(file, "%.6e %.6e %.6e\n", Y0[i], Y0_high[i], Y0_low[i]);
@@ -90,5 +96,5 @@ int main(int argc, char **argv) {
         fclose(file);
     }
 
-    return 1;
+    return 0;
 }

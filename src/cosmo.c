@@ -7,9 +7,18 @@ int COSMO_ROWS;
 // The logarithmic spacing between two neighboring points in T
 double delta_logx_cosmo;
 
+// A flag to determine if a cosmo_file was loaded
+bool cosmo_file_loaded = false;
+
 
 void read_cosmo_file(char *filename, int nrows) {
     FILE* f = fopen(filename, "r");
+
+    if ( f == NULL ) {
+        perror("Could not open the provided cosmo-file. Exit!");
+        
+        exit(1);
+    }
 
     COSMO_ROWS = nrows;
     cosmo_array = (double *) malloc(COSMO_ROWS * COSMO_COLS * sizeof(double));
@@ -22,16 +31,24 @@ void read_cosmo_file(char *filename, int nrows) {
     delta_logx_cosmo = (log(cosmo_array[(COSMO_ROWS-1)*COSMO_COLS]) - log(cosmo_array[0]))/(COSMO_ROWS - 1);
 
     fclose(f);
+
+    cosmo_file_loaded = true;
 }
 
 
 double interp_cosmo_array(int i_col, double x) {
+    if ( !cosmo_file_loaded ) {
+        perror("Cannot interpolate data, since no cosmo-file has been loaded. Exit!");
+
+        exit(1);
+    }
+
     double r = (log(x) - log(cosmo_array[0]))/delta_logx_cosmo;
     int r_div = (int)floor(r);
     double r_mod = r - r_div;
 
     if ( r_div < 0 || r_div > COSMO_ROWS - 2 ) {
-        printf("Index out of range in interp_cosmo_array. Stop.\n");
+        perror("Index out of range in interp_cosmo_array. Exit!\n");
 
         exit(1);
     }
@@ -41,6 +58,12 @@ double interp_cosmo_array(int i_col, double x) {
 
 
 double cosmo_t_T(double T) {
+    if ( !cosmo_file_loaded ) {
+        perror("Cannot calculate t(T) since no cosmo-file has been loaded. Exit!");
+
+        exit(1);
+    }
+
     double logt_min = log(cosmo_array[COSMO_COL_t]);
     double logt_max = log(cosmo_array[(COSMO_ROWS-1)*COSMO_COLS + COSMO_COL_t]);
 
@@ -61,7 +84,7 @@ double cosmo_t_T(double T) {
         }
     }
 
-    printf("Bisection method does not converge. Stop.\n");
+    perror("The bisection method to determine t(T) does not converge. Exit!\n");
     
     exit(1);
 

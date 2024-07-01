@@ -48,6 +48,7 @@ struct parameters {
 extern double *cosmo_array;
 extern int COSMO_ROWS;
 extern double delta_logx_cosmo;
+extern bool cosmo_file_loaded;
 
 void   read_cosmo_file(char *filename, int COSMO_ROWS_INPUT);
 double interp_cosmo_array(int i_col, double x);
