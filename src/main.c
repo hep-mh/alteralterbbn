@@ -84,7 +84,7 @@ int main(int argc, char **argv) {
         FILE* file = fopen(abundance_file, "w");
 
         if ( file == NULL ) {
-            perror("Could not open the provided abundance-file. Exit!");
+            perror("Could not open the provided abundance-file:");
 
             exit(1);
         }

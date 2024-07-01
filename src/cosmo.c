@@ -15,7 +15,7 @@ void read_cosmo_file(char *filename, int nrows) {
     FILE* f = fopen(filename, "r");
 
     if ( f == NULL ) {
-        perror("Could not open the provided cosmo-file. Exit!");
+        perror("Could not open the provided cosmo-file:");
         
         exit(1);
     }
@@ -38,7 +38,7 @@ void read_cosmo_file(char *filename, int nrows) {
 
 double interp_cosmo_array(int i_col, double x) {
     if ( !cosmo_file_loaded ) {
-        perror("Cannot interpolate data, since no cosmo-file has been loaded. Exit!");
+        fprintf(stderr, "ERROR: Cannot interpolate data, since no cosmo-file has been loaded");
 
         exit(1);
     }
@@ -48,7 +48,7 @@ double interp_cosmo_array(int i_col, double x) {
     double r_mod = r - r_div;
 
     if ( r_div < 0 || r_div > COSMO_ROWS - 2 ) {
-        perror("Index out of range in interp_cosmo_array. Exit!\n");
+        fprintf(stderr, "Cannot interpolate data: index out of range\n");
 
         exit(1);
     }
@@ -59,7 +59,7 @@ double interp_cosmo_array(int i_col, double x) {
 
 double cosmo_t_T(double T) {
     if ( !cosmo_file_loaded ) {
-        perror("Cannot calculate t(T) since no cosmo-file has been loaded. Exit!");
+        fprintf(stderr, "ERROR: Cannot calculate t(T) since no cosmo-file has been loaded\n");
 
         exit(1);
     }
@@ -84,7 +84,7 @@ double cosmo_t_T(double T) {
         }
     }
 
-    perror("The bisection method to determine t(T) does not converge. Exit!\n");
+    fprintf(stderr, "ERROR: The bisection method to determine t(T) does not converge\n");
     
     exit(1);
 

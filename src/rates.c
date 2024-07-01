@@ -90,7 +90,8 @@ double rate_pn_enu(int type, double T9, double Tnu, int beta_samples, double fie
                 break;
 
             default:
-                printf("Error calling unknown type of n <--> p beta reaction.");
+                fprintf(stderr, "ERROR: Calling unknown n <--> p beta reaction type");
+
                 exit(1);
         }
 
