@@ -1,3 +1,9 @@
+# Binary files
+bin/*
+
+# Abundance files
+*abundance_file.dat*
+
 # Prerequisites
 *.d
 
