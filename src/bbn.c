@@ -2,7 +2,7 @@
 
 
 int linearize(double T, double reacparam[NNUCREAC+1][10], double f[NNUCREAC+1], double r[NNUCREAC+1], int loop, int inc, int ip, double dt, double Y0[NNUC+1], double Y[NNUC+1], double dY_dt[NNUC+1], double rhob) {    
-    int i, j, g, h, k, l, n, i1, j1, ind, rn1, rn2, rn3, rn4, rn5, rn6;
+    int i, j, g, h, k, l, n, ind, rn1, rn2, rn3, rn4, rn5, rn6;
     double cn1, cn2, cn3, cn4, cn5, cn6;
     double yY[NNUC+1];
     // -->
@@ -402,11 +402,11 @@ int nucl(int err, struct parameters params, double ratioH[NNUC+1]) {
     // Calculate the weak rates (independent of temperature)
     rate_weak(err, f);
 
-    double H, rho_baryons, dT9_dt, dlnT9_dt;
+    double rho_baryons, dT9_dt, dlnT9_dt;
     while( ltime == 0 ) {
         for( int loop = 1; loop <= 2; loop++ ) {
             // Update the cosmological quantities
-            H      = interp_cosmo_array(COSMO_COL_H, t);                // 1/s
+            //H      = interp_cosmo_array(COSMO_COL_H, t);                // 1/s
             Tnu    = GeV_to_GK * interp_cosmo_array(COSMO_COL_Tnu, t);  // GK
             TGeV   = T9/GeV_to_GK;                                      // GeV
             dT9_dt = GeV_to_GK * interp_cosmo_array(COSMO_COL_dTdt, t); // GK/s

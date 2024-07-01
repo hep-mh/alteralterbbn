@@ -22,7 +22,7 @@
 
 // Algorithm specific parameters
 #define NNUCREAC 100
-#define NNUC 26
+#define NNUC      26
 
 // Input specific parameters
 #define COSMO_COLS                7
