@@ -1,7 +1,7 @@
 #include "include.h"
 
 // An arrray to store info about the cosmological evolution
-double *cosmo_array;
+double **cosmo_array;
 int COSMO_ROWS;
 
 // The logarithmic spacing between two neighboring points in T
@@ -9,6 +9,40 @@ double delta_logx_cosmo;
 
 // A flag to determine if a cosmo_file was loaded
 bool cosmo_file_loaded = false;
+
+
+SortOrder determine_sort_order(double *arr, int size) {
+    if (size < 2) return ASCENDING;
+
+    return arr[0] < arr[1] ? ASCENDING : DESCENDING;
+}
+
+
+int find_index(double *arr, int size, double x) {
+    if (size < 2) return -1; // Cannot determine position for arrays smaller than 2
+
+    SortOrder order = determine_sort_order(arr, size);
+    
+    int left = 0;
+    int right = size - 1;
+
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+
+        if ((order == ASCENDING && arr[mid] <= x && (mid == size - 1 || arr[mid + 1] > x)) ||
+            (order == DESCENDING && arr[mid] >= x && (mid == size - 1 || arr[mid + 1] < x))) {
+            return mid;
+        }
+        
+        if ((order == ASCENDING && arr[mid] < x) || (order == DESCENDING && arr[mid] > x)) {
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
+    }
+
+    return -1;
+}
 
 
 void read_cosmo_file(char *filename, int nrows) {
@@ -21,14 +55,17 @@ void read_cosmo_file(char *filename, int nrows) {
     }
 
     COSMO_ROWS = nrows;
-    cosmo_array = (double *) malloc(COSMO_ROWS * COSMO_COLS * sizeof(double));
-    //arr[i * rows + j] = ...; // logically equivalent to arr[i][j]
 
-    for( int row = 0; row < COSMO_ROWS; row++ ) {
-        fscanf(f, "%lf %lf %lf %lf %lf %lf %lf", &cosmo_array[row*COSMO_COLS+0], &cosmo_array[row*COSMO_COLS+1], &cosmo_array[row*COSMO_COLS+2], &cosmo_array[row*COSMO_COLS+3], &cosmo_array[row*COSMO_COLS+4], &cosmo_array[row*COSMO_COLS+5], &cosmo_array[row*COSMO_COLS+6]);
+    cosmo_array = malloc(COSMO_COLS * sizeof(double*));
+    for (int col = 0; col < COSMO_COLS; col++ ) {
+        cosmo_array[col] = malloc(COSMO_ROWS * sizeof(double));
     }
 
-    delta_logx_cosmo = (log(cosmo_array[(COSMO_ROWS-1)*COSMO_COLS]) - log(cosmo_array[0]))/(COSMO_ROWS - 1);
+    for( int row = 0; row < COSMO_ROWS; row++ ) {
+        fscanf(f, "%lf %lf %lf %lf %lf %lf %lf", &cosmo_array[0][row], &cosmo_array[1][row], &cosmo_array[2][row], &cosmo_array[3][row], &cosmo_array[4][row], &cosmo_array[5][row], &cosmo_array[6][row]);
+    }
+
+    delta_logx_cosmo = log(cosmo_array[COSMO_COL_t][1]/cosmo_array[COSMO_COL_t][0]);
 
     fclose(f);
 
@@ -43,7 +80,7 @@ double interp_cosmo_array(int i_col, double x) {
         exit(1);
     }
 
-    double r = (log(x) - log(cosmo_array[0]))/delta_logx_cosmo;
+    double r = (log(x) - log(cosmo_array[COSMO_COL_t][0]))/delta_logx_cosmo;
     int r_div = (int)floor(r);
     double r_mod = r - r_div;
 
@@ -53,7 +90,7 @@ double interp_cosmo_array(int i_col, double x) {
         exit(1);
     }
 
-    return cosmo_array[r_div*COSMO_COLS + i_col] * (1 - r_mod) +  cosmo_array[(r_div+1)*COSMO_COLS + i_col]*r_mod;
+    return cosmo_array[i_col][r_div] * (1 - r_mod) +  cosmo_array[i_col][r_div+1]*r_mod;
 }
 
 
@@ -64,8 +101,8 @@ double cosmo_t_T(double T) {
         exit(1);
     }
 
-    double logt_min = log(cosmo_array[COSMO_COL_t]);
-    double logt_max = log(cosmo_array[(COSMO_ROWS-1)*COSMO_COLS + COSMO_COL_t]);
+    double logt_min = log(cosmo_array[COSMO_COL_t][0]);
+    double logt_max = log(cosmo_array[COSMO_COL_t][COSMO_ROWS-1]);
 
     double eps = 1e-5;
     int N_itermax = 100;

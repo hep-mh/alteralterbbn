@@ -45,14 +45,18 @@ struct parameters {
 
 
 // cosmo.c //////////////////////////////////////////////////////////////////////////////
-extern double *cosmo_array;
+extern double **cosmo_array;
 extern int COSMO_ROWS;
 extern double delta_logx_cosmo;
 extern bool cosmo_file_loaded;
 
-void   read_cosmo_file(char *filename, int COSMO_ROWS_INPUT);
-double interp_cosmo_array(int i_col, double x);
-double cosmo_t_T(double T);
+typedef enum { ASCENDING, DESCENDING } SortOrder;
+
+SortOrder determine_sort_order(double *arr, int size);
+int       find_index(double *arr, int size, double x);
+void      read_cosmo_file(char *filename, int COSMO_ROWS_INPUT);
+double    interp_cosmo_array(int i_col, double x);
+double    cosmo_t_T(double T);
 
 
 // util.c ///////////////////////////////////////////////////////////////////////////////
