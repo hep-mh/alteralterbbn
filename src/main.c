@@ -30,7 +30,7 @@ int main(int argc, char **argv) {
     params.decay_neutrons = true;
 
     // Read the cosmo-file
-    read_cosmo_file(cosmo_file, clines);
+    load_cosmo_data(cosmo_file, clines);
 
     // Testing
     if ( false ) {
@@ -95,6 +95,8 @@ int main(int argc, char **argv) {
     
         fclose(file);
     }
+
+    free_cosmo_data();
 
     return 0;
 }

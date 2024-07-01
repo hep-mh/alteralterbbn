@@ -54,7 +54,10 @@ typedef enum { ASCENDING, DESCENDING } SortOrder;
 
 SortOrder determine_sort_order(double *arr, int size);
 int       find_index(double *arr, int size, double x);
-void      read_cosmo_file(char *filename, int COSMO_ROWS_INPUT);
+void      load_cosmo_data(char *filename, int ncols);
+void      free_cosmo_data();
+double    interp_cosmo_data(double x, int xc, int yc);
+
 double    interp_cosmo_array(int i_col, double x);
 double    cosmo_t_T(double T);
 

@@ -45,7 +45,7 @@ int find_index(double *arr, int size, double x) {
 }
 
 
-void read_cosmo_file(char *filename, int nrows) {
+void load_cosmo_data(char *filename, int nrows) {
     FILE* f = fopen(filename, "r");
 
     if ( f == NULL ) {
@@ -70,6 +70,22 @@ void read_cosmo_file(char *filename, int nrows) {
     fclose(f);
 
     cosmo_file_loaded = true;
+}
+
+
+void free_cosmo_data() {
+    for (int col = 0; col < COSMO_COLS; col++ ) {
+        free(cosmo_array[col]);
+    }
+
+    free(cosmo_array);
+
+    cosmo_file_loaded = false;
+}
+
+
+double interp_cosmo_data(double x, int xc, int yc) {
+    return 0.;
 }
 
 
