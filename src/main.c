@@ -22,7 +22,7 @@ int main(int argc, char **argv) {
     }
 
 
-    // Set of the relevant parameters for BBN,
+    // Set of the relevant parameters for BBN
     struct parameters params;
     params.eta0           = eta*1e-10;
     params.life_neutron   = 880.2;
