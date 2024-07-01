@@ -3,5 +3,5 @@ A modified (altered) version of AlterBBN (/https://alterbbn.hepforge.org/) that 
 
 Compile via
 ```
-clang *.c -lm -O3 -o bin/alteralterbbn
+clang src/*.c -lm -O3 -o bin/alteralterbbn
 ```
