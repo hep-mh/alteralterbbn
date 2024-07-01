@@ -422,7 +422,9 @@ int nucl(int err, struct parameters params, double ratioH[NNUC+1]) {
 
             // Linearize the nonlinear ODE system
             fail = linearize(T9, reacparam, f, r, loop, inc, ip, dt, Y0, Y, dY_dt, rho_baryons);
-            if ( fail > 0 ) return 0;
+            if ( fail > 0 ) {
+                return fail;
+            }
 
             // Condition to break the loop
             // Here dt and 1/dlnT9_dt are in units of s
@@ -460,8 +462,9 @@ int nucl(int err, struct parameters params, double ratioH[NNUC+1]) {
                         if ( dY_dt[i] != 0. && Y[i] > Ytmin ) {
                             dtl = (fabs(Y[i]/dY_dt[i]))*cy*(pow(log10(Y[i])/log10(Ytmin),2.)+1.);
 
-                            if ( dtl < dtmin )
-                            dtmin = dtl;
+                            if ( dtl < dtmin ) {
+                                dtmin = dtl;
+                            }
                         }
                     }
 
@@ -516,7 +519,7 @@ int nucl(int err, struct parameters params, double ratioH[NNUC+1]) {
 }
 
 
-void bbn_abundances(int err, struct parameters params, double Y0[NNUC+1]) {
+void final_abundances(int err, struct parameters params, double Y0[NNUC+1]) {
     // Define an array to store the ratios
     double ratioH[NNUC+1];
 

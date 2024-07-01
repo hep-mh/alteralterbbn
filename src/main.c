@@ -7,7 +7,7 @@ int main(int argc, char **argv) {
     char *cosmo_file = "data/sm_cosmo_file.dat";
     char *abundance_file = "";
 
-    // Parse the command line arguments
+    // Parse the command-line arguments
     if ( argc >= 5 ) {
         abundance_file = argv[4];
     }
@@ -68,10 +68,10 @@ int main(int argc, char **argv) {
 
     // Run the calculation
     double Y0[NNUC+1], Y0_high[NNUC+1],Y0_low[NNUC+1];
-
-    bbn_abundances(0, params, Y0);
-    bbn_abundances(1, params, Y0_high);
-    bbn_abundances(2, params, Y0_low);
+    // -->
+    final_abundances(0, params, Y0     );
+    final_abundances(1, params, Y0_high);
+    final_abundances(2, params, Y0_low );
 
     // Print the results to the screen
     for ( int i = 1; i < 10; i++ ) {
