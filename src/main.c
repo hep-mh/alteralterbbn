@@ -50,7 +50,7 @@ bool compare_rates(int err, struct parameters params, double Tmin, double Tmax, 
 int main(int argc, char **argv) {
     // Default parameters
     double eta            = 6.137;
-    char  *io_directory   = "data/sm/";
+    char  *io_directory   = "io/sm/";
 
     // Parse the command-line arguments
     if ( argc >= 3 ) {
