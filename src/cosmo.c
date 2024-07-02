@@ -1,6 +1,6 @@
 #include "include.h"
 
-// An arrray to store info about the cosmological evolution
+// The data that is stored in the provided cosmo-file
 double **cosmo_data;
 int COSMO_ROWS;
 
