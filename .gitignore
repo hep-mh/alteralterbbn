@@ -3,6 +3,7 @@ bin/*
 
 # Abundance files
 *abundance_file.dat*
+*param_file.dat*
 
 # Prerequisites
 *.d

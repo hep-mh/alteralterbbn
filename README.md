@@ -8,7 +8,7 @@ First create a ``bin`` direcory and then compile via
 ```
 Afterwards run the code with
 ```
-./bin/alteralterbbn <eta_1e10> <cosmo_file> <cosmo_file_lines> <abundance_file>
+./bin/alteralterbbn <eta_1e10> <io_directory>
 ```
 Here, all command-line arguments are optional and if any is not provided a default value is used.
 
