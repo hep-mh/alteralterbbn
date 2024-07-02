@@ -5,6 +5,9 @@ bin/*
 *abundance_file.dat*
 *param_file.dat*
 
+# macOS files
+.DS_Store
+
 # Prerequisites
 *.d
 
