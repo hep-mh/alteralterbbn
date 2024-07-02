@@ -45,9 +45,9 @@ struct parameters {
 
 
 // cosmo.c //////////////////////////////////////////////////////////////////////////////
-extern double **cosmo_array;
+extern double **cosmo_data;
 extern int COSMO_ROWS;
-extern bool cosmo_file_loaded;
+extern bool cosmo_data_loaded;
 
 typedef enum { ASCENDING, DESCENDING } SortOrder;
 

@@ -1,11 +1,11 @@
 #include "include.h"
 
 // An arrray to store info about the cosmological evolution
-double **cosmo_array;
+double **cosmo_data;
 int COSMO_ROWS;
 
 // A flag to determine if a cosmo_file was loaded
-bool cosmo_file_loaded = false;
+bool cosmo_data_loaded = false;
 
 
 SortOrder determine_sort_order(double *arr, int size) {
@@ -53,34 +53,34 @@ void load_cosmo_data(char *filename, int nrows) {
 
     COSMO_ROWS = nrows;
 
-    cosmo_array = malloc(COSMO_COLS * sizeof(double*));
+    cosmo_data = malloc(COSMO_COLS * sizeof(double*));
     for (int col = 0; col < COSMO_COLS; col++ ) {
-        cosmo_array[col] = malloc(COSMO_ROWS * sizeof(double));
+        cosmo_data[col] = malloc(COSMO_ROWS * sizeof(double));
     }
 
     for( int row = 0; row < COSMO_ROWS; row++ ) {
-        fscanf(f, "%lf %lf %lf %lf %lf %lf %lf", &cosmo_array[0][row], &cosmo_array[1][row], &cosmo_array[2][row], &cosmo_array[3][row], &cosmo_array[4][row], &cosmo_array[5][row], &cosmo_array[6][row]);
+        fscanf(f, "%lf %lf %lf %lf %lf %lf %lf", &cosmo_data[0][row], &cosmo_data[1][row], &cosmo_data[2][row], &cosmo_data[3][row], &cosmo_data[4][row], &cosmo_data[5][row], &cosmo_data[6][row]);
     }
 
     fclose(f);
 
-    cosmo_file_loaded = true;
+    cosmo_data_loaded = true;
 }
 
 
 void free_cosmo_data() {
     for (int col = 0; col < COSMO_COLS; col++ ) {
-        free(cosmo_array[col]);
+        free(cosmo_data[col]);
     }
 
-    free(cosmo_array);
+    free(cosmo_data);
 
-    cosmo_file_loaded = false;
+    cosmo_data_loaded = false;
 }
 
 
 double interp_cosmo_data(double x, int xc, int yc) {
-    int ix = find_index(cosmo_array[xc], COSMO_ROWS, x);
+    int ix = find_index(cosmo_data[xc], COSMO_ROWS, x);
 
     if ( ix == -1 || ix == COSMO_ROWS - 1 ) {
         fprintf(stderr, "Cannot interpolate data: index out of range\n");
@@ -88,8 +88,8 @@ double interp_cosmo_data(double x, int xc, int yc) {
         exit(1);
     }
 
-    double x1 = cosmo_array[xc][ix], x2 = cosmo_array[xc][ix+1];
-    double y1 = cosmo_array[yc][ix], y2 = cosmo_array[yc][ix+1];
+    double x1 = cosmo_data[xc][ix], x2 = cosmo_data[xc][ix+1];
+    double y1 = cosmo_data[yc][ix], y2 = cosmo_data[yc][ix+1];
 
     int sign = ( y1 < 0 && y2 < 0 ) ? -1 : 1;
     // -->
@@ -124,14 +124,14 @@ double nb_eta_final_ratio(double t) {
 
 
 double cosmo_t_T(double T) {
-    if ( !cosmo_file_loaded ) {
+    if ( !cosmo_data_loaded ) {
         fprintf(stderr, "ERROR: Cannot calculate t(T) since no cosmo-file has been loaded\n");
 
         exit(1);
     }
 
-    double logt_min = log(cosmo_array[COSMO_COL_t][0]);
-    double logt_max = log(cosmo_array[COSMO_COL_t][COSMO_ROWS-1]);
+    double logt_min = log(cosmo_data[COSMO_COL_t][0]);
+    double logt_max = log(cosmo_data[COSMO_COL_t][COSMO_ROWS-1]);
 
     double eps = 1e-5;
     int N_itermax = 100;
