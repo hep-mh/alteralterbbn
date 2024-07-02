@@ -3,7 +3,6 @@ bin/*
 
 # Abundance- and param-files
 /io/*/abundance_file.dat
-/io/*/param_file.dat
 
 # macOS files
 .DS_Store
