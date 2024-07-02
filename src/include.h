@@ -25,15 +25,14 @@
 #define NNUC      26
 
 // Input specific parameters
-#define COSMO_COLS                7
+#define COSMO_COLS                6
 
 #define COSMO_COL_t               0 // time                 in s
 #define COSMO_COL_T               1 // temperature          in GeV
 #define COSMO_COL_dTdt            2 // dT/dt                in GeV/s
 #define COSMO_COL_Tnu             3 // neutrino temperature in GeV
-#define COSMO_COL_nphi            4 // n_phi                in GeV^3
-#define COSMO_COL_H               5 // Hubble rate          in 1/s
-#define COSMO_COL_nBEtaFinalRatio 6 // nBaryon/etaFinal     in GeV^3
+#define COSMO_COL_H               4 // Hubble rate          in 1/s
+#define COSMO_COL_nBEtaFinalRatio 5 // nBaryon/etaFinal     in GeV^3
 
 
 struct parameters {

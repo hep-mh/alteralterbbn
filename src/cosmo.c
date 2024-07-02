@@ -54,14 +54,22 @@ void load_cosmo_data(char *filename, int nrows) {
     COSMO_ROWS = nrows;
 
     // Allocate space for the cosmo_data array
-    cosmo_data = malloc(COSMO_COLS * sizeof(double*));
+    cosmo_data = malloc( COSMO_COLS * sizeof(double*) );
     for (int col = 0; col < COSMO_COLS; col++ ) {
-        cosmo_data[col] = malloc(COSMO_ROWS * sizeof(double));
+        cosmo_data[col] = malloc( COSMO_ROWS * sizeof(double) );
     }
 
     // Read the data
     for( int row = 0; row < COSMO_ROWS; row++ ) {
-        fscanf(f, "%lf %lf %lf %lf %lf %lf %lf", &cosmo_data[0][row], &cosmo_data[1][row], &cosmo_data[2][row], &cosmo_data[3][row], &cosmo_data[4][row], &cosmo_data[5][row], &cosmo_data[6][row]);
+        fscanf(f, "%lf %lf %lf %lf %lf %lf", &cosmo_data[0][row], &cosmo_data[1][row], &cosmo_data[2][row], &cosmo_data[3][row], &cosmo_data[4][row], &cosmo_data[5][row]);
+    
+        // Adapt the units (hbar in GeV s)
+        cosmo_data[0][row] *= 1;
+        cosmo_data[1][row] *= 1e-3;      // MeV   --> GeV
+        cosmo_data[2][row] *= 1e-6/hbar; // MeV^2 --> GeV/s
+        cosmo_data[3][row] *= 1e-3;      // MeV   --> GeV
+        cosmo_data[4][row] *= 1e-3/hbar; // MeV   --> 1/s
+        cosmo_data[5][row] *= 1e-9;      // MeV^3 ---> GeV^3
     }
 
     fclose(f);
