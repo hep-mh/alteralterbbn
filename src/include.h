@@ -37,10 +37,10 @@
 
 
 struct parameters {
-    double eta0;                // baryon-to-photon ratio
-    double life_neutron;        // neutron lifetime
-    char *method;               // integration method
-    bool decay_neutrons;        // wether to decay neutrons after BBN
+    double  eta0;           // baryon-to-photon ratio
+    double  life_neutron;   // neutron lifetime
+    char   *method;         // integration method
+    bool    decay_neutrons; // wether to decay neutrons after BBN
 };
 
 
@@ -57,12 +57,12 @@ void      load_cosmo_data(char *filename, int ncols);
 void      free_cosmo_data();
 double    interp_cosmo_data(double x, int xc, int yc);
 // -->
+double    time(double T);
+double    time_from_bisection(double T);
 double    temperature(double t);
 double    neutrino_temperature(double t);
 double    dTdt(double t);
 double    nb_eta_final_ratio(double t);
-
-double    cosmo_t_T(double T);
 
 
 // util.c ///////////////////////////////////////////////////////////////////////////////

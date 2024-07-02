@@ -103,27 +103,12 @@ double interp_cosmo_data(double x, int xc, int yc) {
 }
 
 
-double temperature(double t) {
-    return interp_cosmo_data(t, COSMO_COL_t, COSMO_COL_T);
+double time(double T) {
+    return interp_cosmo_data(T, COSMO_COL_T, COSMO_COL_t);
 }
 
 
-double neutrino_temperature(double t) {
-    return interp_cosmo_data(t, COSMO_COL_t, COSMO_COL_Tnu);
-}
-
-
-double dTdt(double t) {
-    return interp_cosmo_data(t, COSMO_COL_t, COSMO_COL_dTdt);
-}
-
-
-double nb_eta_final_ratio(double t) {
-    return interp_cosmo_data(t, COSMO_COL_t, COSMO_COL_nBEtaFinalRatio);
-}
-
-
-double cosmo_t_T(double T) {
+double time_from_bisection(double T) {
     if ( !cosmo_data_loaded ) {
         fprintf(stderr, "ERROR: Cannot calculate t(T) since no cosmo-file has been loaded\n");
 
@@ -155,4 +140,24 @@ double cosmo_t_T(double T) {
     exit(1);
 
     return 0.;
+}
+
+
+double temperature(double t) {
+    return interp_cosmo_data(t, COSMO_COL_t, COSMO_COL_T);
+}
+
+
+double neutrino_temperature(double t) {
+    return interp_cosmo_data(t, COSMO_COL_t, COSMO_COL_Tnu);
+}
+
+
+double dTdt(double t) {
+    return interp_cosmo_data(t, COSMO_COL_t, COSMO_COL_dTdt);
+}
+
+
+double nb_eta_final_ratio(double t) {
+    return interp_cosmo_data(t, COSMO_COL_t, COSMO_COL_nBEtaFinalRatio);
 }

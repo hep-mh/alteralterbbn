@@ -373,7 +373,7 @@ int nucl(int err, struct parameters params, double ratioH[NNUC+1]) {
     double Tnu  = T9;
     double TGeV = T9/GeV_to_GK;
     // -->
-    double t  = cosmo_t_T(TGeV); // s
+    double t  = time_from_bisection(TGeV); // s
     double dt = dt0;
 
     double Ytmin = 1.e-30;
