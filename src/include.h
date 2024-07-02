@@ -1,5 +1,6 @@
 #pragma once
 
+#include <errno.h>   // errno
 #include <math.h>    // sqrt, exp, pow, ...
 #include <stdbool.h> // bool
 #include <stdio.h>   // printf

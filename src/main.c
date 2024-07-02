@@ -49,8 +49,8 @@ bool compare_rates(int err, struct parameters params, double Tmin, double Tmax, 
 
 int main(int argc, char **argv) {
     // Default parameters
-    double eta          = 6.137;
-    char  *io_directory = "io/sm";
+    double  eta          = 6.137;
+    char   *io_directory = "io/sm";
 
     // Parse the command-line arguments
     if ( argc >= 3 ) {
@@ -62,9 +62,9 @@ int main(int argc, char **argv) {
     }
 
     // -->
-    char *cosmo_file     = join_strings(io_directory, "/cosmo_file.dat");
-    char *abundance_file = join_strings(io_directory, "/abundance_file.dat");
-    char *param_file     = join_strings(io_directory, "/param_file.dat");
+    char *cosmo_file_name     = join_strings(io_directory, "/cosmo_file.dat");
+    char *abundance_file_name = join_strings(io_directory, "/abundance_file.dat");
+    char *param_file_name     = join_strings(io_directory, "/param_file.dat");
 
     // Set the relevant parameters for BBN
     struct parameters params;
@@ -74,7 +74,7 @@ int main(int argc, char **argv) {
     params.decay_neutrons = true;
 
     // Load the cosmological data
-    load_cosmo_data(cosmo_file);
+    load_cosmo_data(cosmo_file_name);
 
     // Testing
     if ( false ) for ( int err = 0; err <= 2; err++ ) compare_rates(err, params, 1e-5, 1e10, 100000);
@@ -96,33 +96,34 @@ int main(int argc, char **argv) {
 
 
     // WRITE ABUNDANCE_FILE ///////////////////////////////////////////////////
-    FILE *afile = fopen(abundance_file, "w");
+    FILE *abundance_file = fopen(abundance_file_name, "w");
 
-    if ( afile == NULL ) {
-        perror("ERROR: Could not open the provided abundance-file:");
+    if ( abundance_file == NULL ) {
+        fprintf(stderr, "ERROR: Could not open the file '%s': %s\n", abundance_file_name, strerror(errno));
 
         exit(EXIT_FAILURE);
     }
 
     for ( int i = 1; i < 10; i++ ) {
-        fprintf(afile, "%.6e %.6e %.6e\n", Y0m[i], Y0h[i], Y0l[i]);
+        fprintf(abundance_file, "%.6e %.6e %.6e\n", Y0m[i], Y0h[i], Y0l[i]);
     }
 
-    fclose(afile);
+    fclose(abundance_file);
 
 
     // WRITE PARAM_FILE ///////////////////////////////////////////////////////
-    FILE *pfile = fopen(param_file, "w");
+    FILE *param_file = fopen(param_file_name, "w");
 
-    if ( pfile == NULL ) {
-        perror("ERROR: Could not open the provided param-file:");
+    if ( param_file == NULL ) {
+        fprintf(stderr, "ERROR: Could not open the file '%s': %s\n", param_file_name, strerror(errno));
 
         exit(EXIT_FAILURE);
     }
 
-    fprintf(pfile, "eta=%lfe-10\n", eta);
+    fprintf(param_file, "eta=%lfe-10\n", eta);
 
-    fclose(pfile);
+    fclose(param_file);
+
 
     return 0;
 }

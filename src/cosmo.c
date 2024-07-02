@@ -45,7 +45,7 @@ int find_index(const double *arr, int size, double x) {
 int extract_line_number(const char *filename) {
     FILE *file = fopen(filename, "r");
     if ( file == NULL ) {
-        perror("ERROR: Could not determine the number of lines in the provided cosmo-file:");
+        fprintf(stderr, "ERROR: Could not determine the number of lines in the file '%s': %s\n", filename, strerror(errno));
         
         exit(EXIT_FAILURE);
     }
@@ -60,7 +60,7 @@ int extract_line_number(const char *filename) {
     }
 
     if ( ferror(file) ) {
-        perror("ERROR: Could not determine the number of lines in the provided cosmo-file:");
+        fprintf(stderr, "ERROR: Could not determine the number of lines in the file '%s': %s\n", filename, strerror(errno));
 
         exit(EXIT_FAILURE);
     }
@@ -75,7 +75,7 @@ void load_cosmo_data(const char *filename) {
     FILE* f = fopen(filename, "r");
 
     if ( f == NULL ) {
-        perror("ERROR: Could not open the provided cosmo-file:");
+        fprintf(stderr, "ERROR: Could not open the file '%s': %s\n", filename, strerror(errno));
         
         exit(EXIT_FAILURE);
     }
