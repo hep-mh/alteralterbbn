@@ -78,6 +78,7 @@ int main(int argc, char **argv) {
 
     // Load the cosmological data
     load_cosmo_data(cosmo_file_name);
+    printf("INFO: Using cosmological data from '%s'\n", cosmo_file_name);
 
     // Testing
     if ( false ) for ( int err = 0; err <= 2; err++ ) compare_rates(err, params, 1e-5, 1e10, 100000);
@@ -98,6 +99,7 @@ int main(int argc, char **argv) {
     for ( int i = 1; i < 10; i++ ) {
         printf("%.6e %.6e %.6e\n", Y0m[i], Y0h[i], Y0l[i]);
     }
+    printf("\n");
 
 
     // Write the abundance file
@@ -114,6 +116,8 @@ int main(int argc, char **argv) {
     }
 
     fclose(abundance_file);
+
+    printf("INFO: The final abundances have been written to '%s'\n", abundance_file_name);
 
 
     return 0;
