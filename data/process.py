@@ -21,4 +21,4 @@ Tnu  *= 1e3        # GeV > MeV
 H    *= 1e3*hbar   # 1/s > MeV
 nb   *= 1e9        # GeV^3 > MeV^3
 
-np.savetxt("sm_cosmo_file.dat", np.column_stack([t, T, dTdt, Tnu, H, nb]))
+np.savetxt("../io/sm/cosmo_file.dat", np.column_stack([t, T, dTdt, Tnu, H, nb]))
