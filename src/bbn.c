@@ -548,20 +548,20 @@ void get_final_abundances(int err, Parameters params, double Y0[NNUC+1]) {
     // Perform the neutron decay
     if ( params.decay_neutrons ) {
         Y0[2] += Y0[1];
-        Y0[1] = 0.;
+        Y0[1]  = 0.;
     }
 
     /* Result of this function:
-        Y0[0]       final baryon-to-photon ratio
-        Y0[1]       n_neutron / n_b
-        Y0[2]       n_H / n_b
-        Y0[3]       n_D / n_b
-        Y0[4]       n_3H / n_b
-        Y0[5]       n_3He / n_b
-        Y0[6]       n_4He / n_b = Yp/4
-        Y0[7]       n_6Li / n_b
-        Y0[8]       n_7Li / n_b
-        Y0[9]       n_7Be / n_b
+        Y0[0]  final baryon-to-photon ratio
+        Y0[1]  n_n   / n_b
+        Y0[2]  n_H   / n_b
+        Y0[3]  n_D   / n_b
+        Y0[4]  n_3H  / n_b
+        Y0[5]  n_3He / n_b
+        Y0[6]  n_4He / n_b = Yp/4
+        Y0[7]  n_6Li / n_b
+        Y0[8]  n_7Li / n_b
+        Y0[9]  n_7Be / n_b
     */
 
 }

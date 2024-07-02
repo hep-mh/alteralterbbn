@@ -85,12 +85,12 @@ void load_cosmo_data(const char *filename) {
 
     // Allocate space for the cosmo_data array
     cosmo_data = malloc( COSMO_COLS * sizeof(double*) );
-    for (int col = 0; col < COSMO_COLS; col++ ) {
+    for ( int col = 0; col < COSMO_COLS; col++ ) {
         cosmo_data[col] = malloc( COSMO_ROWS * sizeof(double) );
     }
 
     // Read the data
-    for( int row = 0; row < COSMO_ROWS; row++ ) {
+    for ( int row = 0; row < COSMO_ROWS; row++ ) {
         int read_columns = fscanf(f, "%lf %lf %lf %lf %lf %lf", &cosmo_data[0][row], &cosmo_data[1][row], &cosmo_data[2][row], &cosmo_data[3][row], &cosmo_data[4][row], &cosmo_data[5][row]);
     
         if ( read_columns != COSMO_COLS ) {
@@ -100,7 +100,7 @@ void load_cosmo_data(const char *filename) {
         }
 
         // Adapt the units (hbar in GeV s)
-        cosmo_data[0][row] *= 1;
+        cosmo_data[0][row] *= 1;         // s     --> s
         cosmo_data[1][row] *= 1e-3;      // MeV   --> GeV
         cosmo_data[2][row] *= 1e-6/hbar; // MeV^2 --> GeV/s
         cosmo_data[3][row] *= 1e-3;      // MeV   --> GeV
