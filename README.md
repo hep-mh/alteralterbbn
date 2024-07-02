@@ -13,7 +13,7 @@ and afterwards run with
 Here, the command-line argument ``<io_directory>`` is optional. In case it is not provided, ``io/sm``is used as default.
 
 ## The paran-file
-``AlterAlterBBN`` expects a param-file with name ``param_file.dat`` in ``<io_directory>`` with at least one line that reads ``eta=<eta>``
+``AlterAlterBBN`` expects a param-file with name ``param_file.dat`` in ``<io_directory>`` with at least one line that reads ``eta=<eta>``, e.g. ``eta=6.137e-10``
 
 ## The cosmo-file
 ``AlterAlterBBN`` expects a cosmo-file with name ``cosmo_file.dat`` in ``<io_directory>`` with the same column structure and units as ``ACROPOLIS``, i.e.
