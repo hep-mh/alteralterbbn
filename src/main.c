@@ -49,16 +49,11 @@ bool compare_rates(int err, Parameters params, double Tmin, double Tmax, int N) 
 
 int main(int argc, char **argv) {
     // Default parameters
-    double  eta          = 6.137;
-    char   *io_directory = "io/sm";
+    char *io_directory = "io/sm";
 
     // Parse the command-line arguments
-    if ( argc >= 3 ) {
-        io_directory = argv[2];
-    }
-
     if ( argc >= 2 ) {
-        sscanf(argv[1], "%lf", &eta);
+        io_directory = argv[1];
     }
 
     // -->
@@ -66,9 +61,16 @@ int main(int argc, char **argv) {
     char *abundance_file_name = join_strings(io_directory, "/abundance_file.dat");
     char *param_file_name     = join_strings(io_directory, "/param_file.dat");
 
+    // Load the baryon-to-photon ratio
+    double eta = load_eta(param_file_name);
+    if ( eta == -1 ) {
+        fprintf(stderr, "ERROR: Could not extract the value of eta from '%s'\n", param_file_name);
+    }
+    printf("Using eta = %.5e\n", eta);
+
     // Set the relevant parameters for BBN
     Parameters params;
-    params.eta0           = eta*1e-10;
+    params.eta0           = eta;
     params.life_neutron   = 879.4;
     params.method         = "RK2";
     params.decay_neutrons = true;
@@ -90,12 +92,14 @@ int main(int argc, char **argv) {
     free_cosmo_data();
 
     // Print the results to the screen
+    printf("\nThe final abundances are:\n");
+    printf("mean         high         low\n");
     for ( int i = 1; i < 10; i++ ) {
         printf("%.6e %.6e %.6e\n", Y0m[i], Y0h[i], Y0l[i]);
     }
 
 
-    // WRITE ABUNDANCE_FILE ///////////////////////////////////////////////////
+    // Write the abundance file
     FILE *abundance_file = fopen(abundance_file_name, "w");
 
     if ( abundance_file == NULL ) {
@@ -109,20 +113,6 @@ int main(int argc, char **argv) {
     }
 
     fclose(abundance_file);
-
-
-    // WRITE PARAM_FILE ///////////////////////////////////////////////////////
-    FILE *param_file = fopen(param_file_name, "w");
-
-    if ( param_file == NULL ) {
-        fprintf(stderr, "ERROR: Could not open the file '%s': %s\n", param_file_name, strerror(errno));
-
-        exit(EXIT_FAILURE);
-    }
-
-    fprintf(param_file, "eta=%lfe-10\n", eta);
-
-    fclose(param_file);
 
 
     return 0;

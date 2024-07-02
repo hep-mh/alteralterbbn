@@ -74,6 +74,10 @@ double factorial(int n);
 char*  join_strings(const char* str1, const char* str2);
 
 
+// param.c //////////////////////////////////////////////////////////////////////////////
+double load_eta(const char *filename);
+
+
 // rates.c //////////////////////////////////////////////////////////////////////////////
 void   rate_weak(int err, double f[NNUCREAC+1]);
 double rate_pn_enu(int type, double T9, double Tnu, int beta_samples, double fierz);
