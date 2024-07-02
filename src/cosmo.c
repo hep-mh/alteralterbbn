@@ -4,9 +4,6 @@
 double **cosmo_array;
 int COSMO_ROWS;
 
-// The logarithmic spacing between two neighboring points in T
-double delta_logx_cosmo;
-
 // A flag to determine if a cosmo_file was loaded
 bool cosmo_file_loaded = false;
 
@@ -65,8 +62,6 @@ void load_cosmo_data(char *filename, int nrows) {
         fscanf(f, "%lf %lf %lf %lf %lf %lf %lf", &cosmo_array[0][row], &cosmo_array[1][row], &cosmo_array[2][row], &cosmo_array[3][row], &cosmo_array[4][row], &cosmo_array[5][row], &cosmo_array[6][row]);
     }
 
-    delta_logx_cosmo = log(cosmo_array[COSMO_COL_t][1]/cosmo_array[COSMO_COL_t][0]);
-
     fclose(f);
 
     cosmo_file_loaded = true;
@@ -85,7 +80,6 @@ void free_cosmo_data() {
 
 
 double interp_cosmo_data(double x, int xc, int yc) {
-
     int ix = find_index(cosmo_array[xc], COSMO_ROWS, x);
 
     if ( ix == -1 || ix == COSMO_ROWS - 1 ) {
@@ -96,31 +90,36 @@ double interp_cosmo_data(double x, int xc, int yc) {
 
     double x1 = cosmo_array[xc][ix], x2 = cosmo_array[xc][ix+1];
     double y1 = cosmo_array[yc][ix], y2 = cosmo_array[yc][ix+1];
+
+    int sign = ( y1 < 0 && y2 < 0 ) ? -1 : 1;
+    // -->
+    y1 *= sign;
+    y2 *= sign;
+
     // -->
     double m = log(y2/y1)/log(x2/x1);
 
-    return y2 * pow(x/x2, m);
+    return sign * y2 * pow(x/x2, m);
 }
 
 
-double interp_cosmo_array(int i_col, double x) {
-    if ( !cosmo_file_loaded ) {
-        fprintf(stderr, "ERROR: Cannot interpolate data, since no cosmo-file has been loaded");
+double temperature(double t) {
+    return interp_cosmo_data(t, COSMO_COL_t, COSMO_COL_T);
+}
 
-        exit(1);
-    }
 
-    double r = (log(x) - log(cosmo_array[COSMO_COL_t][0]))/delta_logx_cosmo;
-    int r_div = (int)floor(r);
-    double r_mod = r - r_div;
+double neutrino_temperature(double t) {
+    return interp_cosmo_data(t, COSMO_COL_t, COSMO_COL_Tnu);
+}
 
-    if ( r_div < 0 || r_div > COSMO_ROWS - 2 ) {
-        fprintf(stderr, "Cannot interpolate data: index out of range\n");
 
-        exit(1);
-    }
+double dTdt(double t) {
+    return interp_cosmo_data(t, COSMO_COL_t, COSMO_COL_dTdt);
+}
 
-    return cosmo_array[i_col][r_div] * (1 - r_mod) +  cosmo_array[i_col][r_div+1]*r_mod;
+
+double nb_eta_final_ratio(double t) {
+    return interp_cosmo_data(t, COSMO_COL_t, COSMO_COL_nBEtaFinalRatio);
 }
 
 
@@ -140,7 +139,7 @@ double cosmo_t_T(double T) {
 
     for( int i = 0; i < N_itermax; i++ ) {
         logt_tmp = 0.5*(logt_min + logt_max);
-        T_tmp = interp_cosmo_array(COSMO_COL_T, exp(logt_tmp));
+        T_tmp = temperature(exp(logt_tmp));
         if ( fabs((T - T_tmp)/T) < eps ) {
             return exp(logt_tmp);
         }

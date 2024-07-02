@@ -212,8 +212,14 @@ int linearize(double T, double reacparam[NNUCREAC+1][10], double f[NNUCREAC+1], 
 int nucl(int err, struct parameters params, double ratioH[NNUC+1]) {
     int i;
 
+    double dY_dt0[NNUC+1], dY_dt[NNUC+1], Y0[NNUC+1], Y[NNUC+1];
     for( i = 0 ; i <= NNUC; i++ ) {
         ratioH[i] = 0.;
+
+        dY_dt0[i] = 0.;
+        dY_dt[i]  = 0.;
+        Y0[i]     = 0.;
+        Y[i]      = 0.;
     }
 
     double f[NNUCREAC+1],r[NNUCREAC+1];
@@ -222,10 +228,7 @@ int nucl(int err, struct parameters params, double ratioH[NNUC+1]) {
         r[i] = 0.;
     }
 
-    double dtl;
-
-    double dY_dt0[NNUC+1], dY_dt[NNUC+1], Y0[NNUC+1], Y[NNUC+1];
-    double dtmin;
+    double dtl, dtmin;
 
     // Nuclides: 1=n, 2=p, 3=H2, 4=H3, 5=He3, 6=He4, 7=Li6, 8=Li7, 9=Be7, 10=Li8, 11=B8, 12=Be9, 13=B10, 14=B11, 15=C11, 16=B12, 17=C12, 18=N12, 19=C13, 20=N13, 21=C14, 22=N14, 23=O14, 24=N15, 25=O15, 26=O16
     // Atomic number A
@@ -345,19 +348,19 @@ int nucl(int err, struct parameters params, double ratioH[NNUC+1]) {
     
     };
 
-    int inc = 100; // old: 50
+    int inc   = 100; // old: 50
     int ltime = 0;
-    int is = 1;
-    int ip = inc;
-    int it = 0;
+    int is    = 1;
+    int ip    = inc;
+    int it    = 0;
 
     // Values corresponding to 'failsafe = 2'
-    double cy = 0.1;     // Limiting value of dY/dt
-    double ct = 0.005;   // Limiting value of dT/dt
-    double dt0 = 1.e-10; // old: 1e-4
-    int nitmax = 1000;   // original: 100
+    double cy  = 0.1;     // Limiting value of dY/dt
+    double ct  = 0.005;   // Limiting value of dT/dt
+    double dt0 = 1.e-10;  // old: 1e-4
+    int nitmax = 1000;    // original: 100
     // -->
-    cy*=pow(NNUC/26., 3);
+    cy *= pow(NNUC/26., 3);
      
     int fail = 0;
 
@@ -390,7 +393,7 @@ int nucl(int err, struct parameters params, double ratioH[NNUC+1]) {
     Y0[2] = Y[2];
 
     // Calculate the initial baryon density in g/cm^3.
-    double rhob0 = GeV4_to_gcm3 * params.eta0 * M_amu * interp_cosmo_array(COSMO_COL_nBEtaFinalRatio, t);
+    double rhob0 = GeV4_to_gcm3 * params.eta0 * M_amu * nb_eta_final_ratio(t);
     // -->
     Y[3]  = Y[1]*Y[2]*rhob0*exp(reacparam[12][9]/T9)/pow(T9,1.5)/(reacparam[12][8]*0.987e10);
     Y0[3] = Y[3];
@@ -408,14 +411,13 @@ int nucl(int err, struct parameters params, double ratioH[NNUC+1]) {
     while( ltime == 0 ) {
         for( int loop = 1; loop <= 2; loop++ ) {
             // Update the cosmological quantities
-            //H      = interp_cosmo_array(COSMO_COL_H, t);                // 1/s
-            Tnu    = GeV_to_GK * interp_cosmo_array(COSMO_COL_Tnu, t);  // GK
-            TGeV   = T9/GeV_to_GK;                                      // GeV
-            dT9_dt = GeV_to_GK * interp_cosmo_array(COSMO_COL_dTdt, t); // GK/s
+            Tnu    = GeV_to_GK * neutrino_temperature(t);    // GK
+            TGeV   = T9/GeV_to_GK;                           // GeV
+            dT9_dt = GeV_to_GK * dTdt(t);                    // GK/s
             // -->
             dlnT9_dt = dT9_dt/T9; // = dlnT_dt, units of s
 
-            rho_baryons = GeV4_to_gcm3 * params.eta0 * M_amu * interp_cosmo_array(COSMO_COL_nBEtaFinalRatio, t); // g/cm^3.
+            rho_baryons = GeV4_to_gcm3 * params.eta0 * M_amu * nb_eta_final_ratio(t); // g/cm^3.
 
             // Calculate the n->p conversion rate
             rate_pn(err, f, r, T9, Tnu, params.life_neutron);
@@ -439,7 +441,7 @@ int nucl(int err, struct parameters params, double ratioH[NNUC+1]) {
                 }
 
                 // Calculate the baryon-to-photon ratio
-                ratioH[0] = params.eta0 * interp_cosmo_array(COSMO_COL_nBEtaFinalRatio, t)/(0.243587656435 * TGeV*TGeV*TGeV);
+                ratioH[0] = params.eta0 * nb_eta_final_ratio(t)/(0.243587656435 * TGeV*TGeV*TGeV);
 
                 // Calculate the ratios 'element abundance / hydrogen abundance'
                 for( int j = 1; j <= NNUC; j++ ) {
@@ -462,7 +464,7 @@ int nucl(int err, struct parameters params, double ratioH[NNUC+1]) {
                     dtmin = fabs(1./dlnT9_dt)*ct; // Units check out
                     for( i = 1; i <= NNUC; i++ ) {
                         if ( dY_dt[i] != 0. && Y[i] > Ytmin ) {
-                            dtl = (fabs(Y[i]/dY_dt[i]))*cy*(pow(log10(Y[i])/log10(Ytmin),2.)+1.);
+                            dtl = ( fabs(Y[i]/dY_dt[i]) ) * cy * ( pow(log10(Y[i])/log10(Ytmin), 2.) + 1. );
 
                             if ( dtl < dtmin ) {
                                 dtmin = dtl;
@@ -487,7 +489,7 @@ int nucl(int err, struct parameters params, double ratioH[NNUC+1]) {
                 t += dt;
 
                 // Calculate the new temperature for the next iteration step
-                T9 = GeV_to_GK * interp_cosmo_array(COSMO_COL_T, t);
+                T9 = GeV_to_GK * temperature(t);
 
                 for( i = 1; i <= NNUC; i++ ) {
                     Y0[i]     = Y[i];

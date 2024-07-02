@@ -47,7 +47,6 @@ struct parameters {
 // cosmo.c //////////////////////////////////////////////////////////////////////////////
 extern double **cosmo_array;
 extern int COSMO_ROWS;
-extern double delta_logx_cosmo;
 extern bool cosmo_file_loaded;
 
 typedef enum { ASCENDING, DESCENDING } SortOrder;
@@ -57,8 +56,12 @@ int       find_index(double *arr, int size, double x);
 void      load_cosmo_data(char *filename, int ncols);
 void      free_cosmo_data();
 double    interp_cosmo_data(double x, int xc, int yc);
+// -->
+double    temperature(double t);
+double    neutrino_temperature(double t);
+double    dTdt(double t);
+double    nb_eta_final_ratio(double t);
 
-double    interp_cosmo_array(int i_col, double x);
 double    cosmo_t_T(double T);
 
 
