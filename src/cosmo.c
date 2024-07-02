@@ -85,7 +85,21 @@ void free_cosmo_data() {
 
 
 double interp_cosmo_data(double x, int xc, int yc) {
-    return 0.;
+
+    int ix = find_index(cosmo_array[xc], COSMO_ROWS, x);
+
+    if ( ix == -1 || ix == COSMO_ROWS - 1 ) {
+        fprintf(stderr, "Cannot interpolate data: index out of range\n");
+
+        exit(1);
+    }
+
+    double x1 = cosmo_array[xc][ix], x2 = cosmo_array[xc][ix+1];
+    double y1 = cosmo_array[yc][ix], y2 = cosmo_array[yc][ix+1];
+    // -->
+    double m = log(y2/y1)/log(x2/x1);
+
+    return y2 * pow(x/x2, m);
 }
 
 

@@ -13,7 +13,9 @@ int linearize(double T, double reacparam[NNUCREAC+1][10], double f[NNUCREAC+1], 
     int type[NNUCREAC+1], n1[NNUCREAC+1], n2[NNUCREAC+1], n3[NNUCREAC+1], n4[NNUCREAC+1], n5[NNUCREAC+1], n6[NNUCREAC+1];
     double rev[NNUCREAC+1], q9[NNUCREAC+1];
     double a[NNUC+1][NNUC+1], b[NNUC+1], yx[NNUC+1];
-    double x[NNUC+1], a0[NNUC+1][NNUC+1], cx, sum, xdy, t;
+    double x[NNUC+1], a0[NNUC+1][NNUC+1];
+    
+    double cx, sum, xdy, t;
     int icnvm, nord, test;
 
     for ( i = 1; i <= NNUCREAC; i++ ) {
