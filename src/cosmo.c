@@ -47,7 +47,7 @@ int extract_line_number(const char *filename) {
     if ( file == NULL ) {
         perror("ERROR: Could not determine the number of lines in the provided cosmo-file:");
         
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 
     long line_count = 0;
@@ -62,7 +62,7 @@ int extract_line_number(const char *filename) {
     if ( ferror(file) ) {
         perror("ERROR: Could not determine the number of lines in the provided cosmo-file:");
 
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 
     fclose(file);
@@ -75,9 +75,9 @@ void load_cosmo_data(const char *filename) {
     FILE* f = fopen(filename, "r");
 
     if ( f == NULL ) {
-        perror("Could not open the provided cosmo-file:");
+        perror("ERROR: Could not open the provided cosmo-file:");
         
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 
     // Read the number of lines in the cosmo-file
