@@ -61,8 +61,14 @@ void load_cosmo_data(char *filename, int nrows) {
 
     // Read the data
     for( int row = 0; row < COSMO_ROWS; row++ ) {
-        fscanf(f, "%lf %lf %lf %lf %lf %lf", &cosmo_data[0][row], &cosmo_data[1][row], &cosmo_data[2][row], &cosmo_data[3][row], &cosmo_data[4][row], &cosmo_data[5][row]);
+        int read_columns = fscanf(f, "%lf %lf %lf %lf %lf %lf", &cosmo_data[0][row], &cosmo_data[1][row], &cosmo_data[2][row], &cosmo_data[3][row], &cosmo_data[4][row], &cosmo_data[5][row]);
     
+        if ( read_columns != COSMO_COLS ) {
+            fprintf(stderr, "ERROR: The provided cosmo-file does not have the expected number of rows and/or columns\n");
+
+            exit(1);
+        }
+
         // Adapt the units (hbar in GeV s)
         cosmo_data[0][row] *= 1;
         cosmo_data[1][row] *= 1e-3;      // MeV   --> GeV
