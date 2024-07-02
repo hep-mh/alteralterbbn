@@ -84,13 +84,16 @@ int main(int argc, char **argv) {
     if ( false ) for ( int err = 0; err <= 2; err++ ) compare_rates(err, params, 1e-5, 1e10, 100000);
 
     // Run the calculation
-    printf("INFO: Solving the Boltzmann equation using the '%s' method\n", params.method);
+    printf("INFO: Running nucleosynthesis...");
+    fflush(stdout);
 
     double Y0m[NNUC+1], Y0h[NNUC+1],Y0l[NNUC+1];
     // -->
     get_final_abundances(0, params, Y0m);
     get_final_abundances(1, params, Y0h);
     get_final_abundances(2, params, Y0l);
+
+    printf("Done!\n");
 
     // Free the cosmological data
     free_cosmo_data();

@@ -17,7 +17,7 @@ An example output would be
 INFO: Using 'io/sm' to read and write data
 INFO: Using eta = 6.13700e-10 from 'io/sm/param_file.dat'
 INFO: Using cosmological data from 'io/sm/cosmo_file.dat'
-INFO: Solving the Boltzmann equation using the 'RK2' method
+INFO: Running nucleosynthesis...Done!
 INFO: The final abundances are:
 
 mean         high         low
