@@ -10,7 +10,7 @@ and afterwards run with
 ```
 ./bin/alteralterbbn <io_directory>
 ```
-Here, the command-line argument ``<io_directory>`` is optional. In case it is not provided, ``io/sm``is used as default.
+Here, the command-line argument ``<io_directory>`` is optional. In case it is not provided, ``io/sm`` is used as default.
 
 ## The paran-file
 ``AlterAlterBBN`` expects a param-file with name ``param_file.dat`` in ``<io_directory>`` with at least one line that reads ``eta=<eta>``, e.g. ``eta=6.137e-10``
