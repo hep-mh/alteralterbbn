@@ -1,7 +1,7 @@
 #include "include.h"
 
 
-bool compare_rates(int err, struct parameters params, double Tmin, double Tmax, int N) {
+bool compare_rates(int err, Parameters params, double Tmin, double Tmax, int N) {
     bool all_equal = true;
 
     double f1[NNUCREAC+1], f2[NNUCREAC+1];
@@ -67,7 +67,7 @@ int main(int argc, char **argv) {
     char *param_file_name     = join_strings(io_directory, "/param_file.dat");
 
     // Set the relevant parameters for BBN
-    struct parameters params;
+    Parameters params;
     params.eta0           = eta*1e-10;
     params.life_neutron   = 879.4;
     params.method         = "RK2";

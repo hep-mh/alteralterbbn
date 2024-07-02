@@ -36,12 +36,12 @@
 #define COSMO_COL_nBEtaFinalRatio 5 // nBaryon/etaFinal     in GeV^3
 
 
-struct parameters {
+typedef struct {
     double  eta0;           // baryon-to-photon ratio
     double  life_neutron;   // neutron lifetime
     char   *method;         // integration method
     bool    decay_neutrons; // whether to decay neutrons after BBN
-};
+} Parameters;
 
 
 // cosmo.c //////////////////////////////////////////////////////////////////////////////
@@ -88,6 +88,6 @@ void rate_all_test(int err, double f[], double T9);
 
 // bbn.c ////////////////////////////////////////////////////////////////////////////////
 int  linearize(double T9, double reacparam[NNUCREAC+1][10], double f[NNUCREAC+1], double r[NNUCREAC+1], int loop, int inc, int ip, double dt, double y0[NNUC+1], double y[NNUC+1], double dydt[NNUC+1], double rhob);
-int  nucl(int err, struct parameters params, double ratioH[NNUC+1]);
-void final_abundances(int err, struct parameters params, double Y0[NNUC+1]);
+int  nucl(int err, Parameters params, double ratioH[NNUC+1]);
+void final_abundances(int err, Parameters params, double Y0[NNUC+1]);
 

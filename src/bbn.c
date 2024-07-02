@@ -209,7 +209,7 @@ int linearize(double T, double reacparam[NNUCREAC+1][10], double f[NNUCREAC+1], 
 }
 
 
-int nucl(int err, struct parameters params, double ratioH[NNUC+1]) {
+int nucl(int err, Parameters params, double ratioH[NNUC+1]) {
     int i;
 
     double dY_dt0[NNUC+1], dY_dt[NNUC+1], Y0[NNUC+1], Y[NNUC+1];
@@ -358,7 +358,7 @@ int nucl(int err, struct parameters params, double ratioH[NNUC+1]) {
     double cy  = 0.1;     // Limiting value of dY/dt
     double ct  = 0.005;   // Limiting value of dT/dt
     double dt0 = 1.e-10;  // old: 1e-4
-    int nitmax = 1000;    // original: 100
+    int nitmax = 5000;    // original: 100
     // -->
     cy *= pow(NNUC/26., 3);
      
@@ -411,9 +411,9 @@ int nucl(int err, struct parameters params, double ratioH[NNUC+1]) {
     while( ltime == 0 ) {
         for( int loop = 1; loop <= 2; loop++ ) {
             // Update the cosmological quantities
-            Tnu    = GeV_to_GK * neutrino_temperature(t);    // GK
-            TGeV   = T9/GeV_to_GK;                           // GeV
-            dT9_dt = GeV_to_GK * dTdt(t);                    // GK/s
+            Tnu    = GeV_to_GK * neutrino_temperature(t); // GK
+            TGeV   = T9/GeV_to_GK;                        // GeV
+            dT9_dt = GeV_to_GK * dTdt(t);                 // GK/s
             // -->
             dlnT9_dt = dT9_dt/T9; // = dlnT_dt, units of s
 
@@ -523,7 +523,7 @@ int nucl(int err, struct parameters params, double ratioH[NNUC+1]) {
 }
 
 
-void final_abundances(int err, struct parameters params, double Y0[NNUC+1]) {
+void final_abundances(int err, Parameters params, double Y0[NNUC+1]) {
     // Define an array to store the ratios
     double ratioH[NNUC+1];
 
