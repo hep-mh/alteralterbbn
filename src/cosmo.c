@@ -53,11 +53,13 @@ void load_cosmo_data(char *filename, int nrows) {
 
     COSMO_ROWS = nrows;
 
+    // Allocate space for the cosmo_data array
     cosmo_data = malloc(COSMO_COLS * sizeof(double*));
     for (int col = 0; col < COSMO_COLS; col++ ) {
         cosmo_data[col] = malloc(COSMO_ROWS * sizeof(double));
     }
 
+    // Read the data
     for( int row = 0; row < COSMO_ROWS; row++ ) {
         fscanf(f, "%lf %lf %lf %lf %lf %lf %lf", &cosmo_data[0][row], &cosmo_data[1][row], &cosmo_data[2][row], &cosmo_data[3][row], &cosmo_data[4][row], &cosmo_data[5][row], &cosmo_data[6][row]);
     }
@@ -80,6 +82,12 @@ void free_cosmo_data() {
 
 
 double interp_cosmo_data(double x, int xc, int yc) {
+    if ( !cosmo_data_loaded ) {
+        fprintf(stderr, "ERROR: Cannot interpolate data since no cosmo-file has been loaded\n");
+
+        exit(1);
+    }
+
     int ix = find_index(cosmo_data[xc], COSMO_ROWS, x);
 
     if ( ix == -1 || ix == COSMO_ROWS - 1 ) {
