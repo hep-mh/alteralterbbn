@@ -49,8 +49,8 @@ bool compare_rates(int err, struct parameters params, double Tmin, double Tmax, 
 
 int main(int argc, char **argv) {
     // Default parameters
-    double eta            = 6.137;
-    char  *io_directory   = "io/sm/";
+    double eta          = 6.137;
+    char  *io_directory = "io/sm";
 
     // Parse the command-line arguments
     if ( argc >= 3 ) {
@@ -62,9 +62,9 @@ int main(int argc, char **argv) {
     }
 
     // -->
-    char *cosmo_file     = join_strings(io_directory, "cosmo_file.dat");
-    char* abundance_file = join_strings(io_directory, "abundance_file.dat");
-
+    char *cosmo_file     = join_strings(io_directory, "/cosmo_file.dat");
+    char *abundance_file = join_strings(io_directory, "/abundance_file.dat");
+    char *param_file     = join_strings(io_directory, "/param_file.dat");
 
     // Set the relevant parameters for BBN
     struct parameters params;
@@ -73,40 +73,56 @@ int main(int argc, char **argv) {
     params.method         = "RK2";
     params.decay_neutrons = true;
 
-    // Read the cosmo-file
+    // Load the cosmological data
     load_cosmo_data(cosmo_file);
 
     // Testing
     if ( false ) for ( int err = 0; err <= 2; err++ ) compare_rates(err, params, 1e-5, 1e10, 100000);
 
     // Run the calculation
-    double Y0[NNUC+1], Y0_high[NNUC+1],Y0_low[NNUC+1];
+    double Y0m[NNUC+1], Y0h[NNUC+1],Y0l[NNUC+1];
     // -->
-    final_abundances(0, params, Y0     );
-    final_abundances(1, params, Y0_high);
-    final_abundances(2, params, Y0_low );
+    final_abundances(0, params, Y0m);
+    final_abundances(1, params, Y0h);
+    final_abundances(2, params, Y0l);
+
+    // Free the cosmological data
+    free_cosmo_data();
 
     // Print the results to the screen
     for ( int i = 1; i < 10; i++ ) {
-        printf("%.6e %.6e %.6e\n", Y0[i], Y0_high[i], Y0_low[i]);
+        printf("%.6e %.6e %.6e\n", Y0m[i], Y0h[i], Y0l[i]);
     }
 
-    // Save the results to the specified abundance-file
-    FILE* file = fopen(abundance_file, "w");
 
-    if ( file == NULL ) {
+    // WRITE ABUNDANCE_FILE ///////////////////////////////////////////////////
+    FILE *afile = fopen(abundance_file, "w");
+
+    if ( afile == NULL ) {
         perror("ERROR: Could not open the provided abundance-file:");
 
         exit(EXIT_FAILURE);
     }
 
     for ( int i = 1; i < 10; i++ ) {
-        fprintf(file, "%.6e %.6e %.6e\n", Y0[i], Y0_high[i], Y0_low[i]);
+        fprintf(afile, "%.6e %.6e %.6e\n", Y0m[i], Y0h[i], Y0l[i]);
     }
 
-    fclose(file);
+    fclose(afile);
 
-    free_cosmo_data();
+
+    // WRITE PARAM_FILE ///////////////////////////////////////////////////////
+    FILE *pfile = fopen(param_file, "w");
+
+    if ( pfile == NULL ) {
+        perror("ERROR: Could not open the provided param-file:");
+
+        exit(EXIT_FAILURE);
+    }
+
+    fprintf(pfile, "eta=%lfe-10\n", eta);
+
+    fclose(pfile);
 
     return 0;
 }
