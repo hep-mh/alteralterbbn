@@ -69,7 +69,7 @@ int main(int argc, char **argv) {
     // Set the relevant parameters for BBN
     struct parameters params;
     params.eta0           = eta*1e-10;
-    params.life_neutron   = 880.2;
+    params.life_neutron   = 879.4;
     params.method         = "RK2";
     params.decay_neutrons = true;
 
