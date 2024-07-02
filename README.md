@@ -12,6 +12,28 @@ and afterwards run with
 ```
 Here, the command-line argument ``<io_directory>`` is optional. In case it is not provided, ``io/sm`` is used as default.
 
+An example output would be
+```
+INFO: Using 'io/sm' to read and write data
+INFO: Using eta = 6.13700e-10 from 'io/sm/param_file.dat'
+INFO: Using cosmological data from 'io/sm/cosmo_file.dat'
+INFO: Solving the Boltzmann equation using the 'RK2' method
+INFO: The final abundances are:
+
+mean         high         low
+0.000000e+00 0.000000e+00 0.000000e+00
+7.532623e-01 7.533308e-01 7.531942e-01
+1.882976e-05 1.842939e-05 1.924009e-05
+6.028391e-08 5.846803e-08 6.218857e-08
+7.718020e-06 7.778273e-06 7.663938e-06
+6.166916e-02 6.165221e-02 6.168603e-02
+8.273444e-15 2.691358e-14 1.282041e-15
+2.201539e-11 2.229537e-11 2.161804e-11
+3.765608e-10 4.021326e-10 3.532402e-10
+
+INFO: The final abundances have been written to 'io/sm/abundance_file.dat'
+```
+
 ## The param-file
 ``AlterAlterBBN`` expects a param-file with name ``param_file.dat`` in ``<io_directory>`` with at least one line that reads ``eta=<eta>``, e.g. ``eta=6.137e-10``
 
