@@ -50,21 +50,20 @@ bool compare_rates(int err, struct parameters params, double Tmin, double Tmax, 
 int main(int argc, char **argv) {
     // Default parameters
     double eta            = 6.137;
-    char  *cosmo_file     = "data/sm_cosmo_file.dat";
-    char  *abundance_file = "";
+    char  *io_directory   = "data/sm/";
 
     // Parse the command-line arguments
-    if ( argc >= 4 ) {
-        abundance_file = argv[4];
-    }
-
     if ( argc >= 3 ) {
-        cosmo_file = argv[2];
+        io_directory = argv[2];
     }
 
     if ( argc >= 2 ) {
         sscanf(argv[1], "%lf", &eta);
     }
+
+    // -->
+    char *cosmo_file     = join_strings(io_directory, "cosmo_file.dat");
+    char* abundance_file = join_strings(io_directory, "abundance_file.dat");
 
 
     // Set the relevant parameters for BBN
@@ -92,23 +91,20 @@ int main(int argc, char **argv) {
         printf("%.6e %.6e %.6e\n", Y0[i], Y0_high[i], Y0_low[i]);
     }
 
-    // If a filename was provided, also save the results
-    // to the specified abundance-file
-    if ( strcmp(abundance_file, "") != 0 ) {
-        FILE* file = fopen(abundance_file, "w");
+    // Save the results to the specified abundance-file
+    FILE* file = fopen(abundance_file, "w");
 
-        if ( file == NULL ) {
-            perror("Could not open the provided abundance-file:");
+    if ( file == NULL ) {
+        perror("Could not open the provided abundance-file:");
 
-            exit(1);
-        }
-
-        for ( int i = 1; i < 10; i++ ) {
-            fprintf(file, "%.6e %.6e %.6e\n", Y0[i], Y0_high[i], Y0_low[i]);
-        }
-    
-        fclose(file);
+        exit(1);
     }
+
+    for ( int i = 1; i < 10; i++ ) {
+        fprintf(file, "%.6e %.6e %.6e\n", Y0[i], Y0_high[i], Y0_low[i]);
+    }
+
+    fclose(file);
 
     free_cosmo_data();
 

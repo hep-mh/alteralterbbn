@@ -69,6 +69,7 @@ double    nb_eta_final_ratio(double t);
 double max(double x, double y);
 double min(double x, double y);
 double factorial(int n);
+char*  join_strings(const char* str1, const char* str2);
 
 
 // rates.c //////////////////////////////////////////////////////////////////////////////

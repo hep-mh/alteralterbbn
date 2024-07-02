@@ -20,3 +20,22 @@ double factorial(int n) {
     
     return n*factorial(n-1); 
 }
+
+
+char* join_strings(const char* str1, const char* str2) {
+    // Calculate the length of the new string
+    size_t len1 = strlen(str1);
+    size_t len2 = strlen(str2);
+    size_t total_len = len1 + len2 + 1; // +1 for the null terminator
+
+    // Allocate memory for the new string
+    char *result = (char*) malloc( total_len * sizeof(char) );
+
+    // Copy the first string into the result
+    strcpy(result, str1);
+
+    // Concatenate the second string to the result
+    strcat(result, str2);
+
+    return result;
+}
