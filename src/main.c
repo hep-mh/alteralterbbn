@@ -1,11 +1,52 @@
 #include "include.h"
 
+
+bool compare_rates(int err, struct parameters params, double Tmin, double Tmax, int N) {
+    bool all_equal = true;
+
+    double f1[NNUCREAC+1], f2[NNUCREAC+1];
+    double r1[NNUCREAC+1], r2[NNUCREAC+1];
+
+    for ( int i = 0; i <= NNUCREAC; i++ ) {
+        f1[i] = 0.;
+        f2[i] = 0.;
+        r1[i] = 0.;
+        r2[i] = 0.;
+    }
+
+    for ( int j = 0; j < N; ++j ) {
+        double logT = log(Tmin) + log(Tmax/Tmin)*j/(N-1);
+
+        double T = exp(logT);
+
+        rate_pn(err, f1, r1, T, 0.71*T, params.life_neutron);
+        rate_pn(err, f2, r2, T, 0.71*T, params.life_neutron);
+
+        rate_weak(err, f1);
+        rate_weak_test(err, f2);
+
+        rate_all(err, f1, T);
+        rate_all_test(err, f2, T);
+
+        for ( int i = 1; i <= 100; ++i ) {
+            if ( f1[i] != f2[i] || r1[i] != r2[i] ) {
+                printf("%d %.6e %.6e %.6e %.6e\n", i, f1[i], f2[i], r1[i], r2[i]);
+
+                all_equal = false;
+            }
+        }
+    }
+
+    return all_equal;
+}
+
+
 int main(int argc, char **argv) {
     // Default parameters
-    int clines = 6174;
-    double eta = 6.137;
-    char *cosmo_file = "data/sm_cosmo_file.dat";
-    char *abundance_file = "";
+    double eta            = 6.137;
+    char  *cosmo_file     = "data/sm_cosmo_file.dat";
+    int    clines         = 6174;
+    char  *abundance_file = "";
 
     // Parse the command-line arguments
     if ( argc >= 5 ) {
@@ -22,7 +63,7 @@ int main(int argc, char **argv) {
     }
 
 
-    // Set of the relevant parameters for BBN
+    // Set the relevant parameters for BBN
     struct parameters params;
     params.eta0           = eta*1e-10;
     params.life_neutron   = 880.2;
@@ -33,38 +74,7 @@ int main(int argc, char **argv) {
     load_cosmo_data(cosmo_file, clines);
 
     // Testing
-    if ( false ) {
-        double f1[NNUCREAC+1], f2[NNUCREAC+1];
-        double r1[NNUCREAC+1], r2[NNUCREAC+1];
-
-        double Tmin = 1e-5, Tmax = 1e10;
-
-        int N = 100000;
-
-        int err = 0;
-
-        for ( int j = 0; j < N; ++j ) {
-            double logT = log(Tmin) + log(Tmax/Tmin)*j/(N-1);
-
-            double T = exp(logT);
-
-            rate_pn(err, f1, r1, T, 0.71*T, params.life_neutron);
-            rate_pn(err, f2, r2, T, 0.71*T, params.life_neutron);
-
-            rate_weak(err, f1);
-            rate_weak_test(err, f2);
-
-            rate_all(err, f1, T);
-            rate_all_test(err, f2, T);
-
-            for ( int i = 1; i <= 100; ++i ) {
-                double dev = fabs(f1[i]-f2[i])/f1[i];
-
-                if ( dev > 1e-12 )
-                    printf("%d %.6e \n", i, dev);
-            }
-        }
-    }
+    if ( false ) for ( int err = 0; err <= 2; err++ ) compare_rates(err, params, 1e-5, 1e10, 100000);
 
     // Run the calculation
     double Y0[NNUC+1], Y0_high[NNUC+1],Y0_low[NNUC+1];

@@ -39,7 +39,7 @@ struct parameters {
     double  eta0;           // baryon-to-photon ratio
     double  life_neutron;   // neutron lifetime
     char   *method;         // integration method
-    bool    decay_neutrons; // wether to decay neutrons after BBN
+    bool    decay_neutrons; // whether to decay neutrons after BBN
 };
 
 
