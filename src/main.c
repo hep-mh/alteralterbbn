@@ -55,6 +55,7 @@ int main(int argc, char **argv) {
     if ( argc >= 2 ) {
         io_directory = argv[1];
     }
+    printf("INFO: Using '%s' to read and write data\n", io_directory);
 
     // -->
     char *cosmo_file_name     = join_strings(io_directory, "/cosmo_file.dat");
@@ -66,7 +67,7 @@ int main(int argc, char **argv) {
     if ( eta == -1 ) {
         fprintf(stderr, "ERROR: Could not extract the value of eta from '%s'\n", param_file_name);
     }
-    printf("Using eta = %.5e\n", eta);
+    printf("INFO: Using eta = %.5e from '%s'\n", eta, param_file_name);
 
     // Set the relevant parameters for BBN
     Parameters params;
@@ -92,8 +93,8 @@ int main(int argc, char **argv) {
     free_cosmo_data();
 
     // Print the results to the screen
-    printf("\nThe final abundances are:\n");
-    printf("mean         high         low\n");
+    printf("INFO: The final abundances are:\n");
+    printf("\nmean         high         low\n");
     for ( int i = 1; i < 10; i++ ) {
         printf("%.6e %.6e %.6e\n", Y0m[i], Y0h[i], Y0l[i]);
     }
