@@ -2,7 +2,7 @@
 
 // The data that is stored in the provided cosmo-file
 double **cosmo_data;
-int COSMO_ROWS;
+int      COSMO_ROWS;
 
 // A flag to determine if a cosmo_file was loaded
 bool cosmo_data_loaded = false;
