@@ -45,7 +45,7 @@ int find_index(const double *arr, int size, double x) {
 int extract_line_number(const char *filename) {
     FILE *file = fopen(filename, "r");
     if ( file == NULL ) {
-        fprintf(stderr, "ERROR: Could not determine the number of lines in the file '%s': %s\n", filename, strerror(errno));
+        fprintf(stderr, "ERROR: Could not determine number of lines in file '%s': %s\n", filename, strerror(errno));
         
         exit(EXIT_FAILURE);
     }
@@ -60,7 +60,7 @@ int extract_line_number(const char *filename) {
     }
 
     if ( ferror(file) ) {
-        fprintf(stderr, "ERROR: Could not determine the number of lines in the file '%s': %s\n", filename, strerror(errno));
+        fprintf(stderr, "ERROR: Could not determine number of lines in file '%s': %s\n", filename, strerror(errno));
 
         exit(EXIT_FAILURE);
     }
@@ -75,7 +75,7 @@ void load_cosmo_data(const char *filename) {
     FILE *f = fopen(filename, "r");
 
     if ( f == NULL ) {
-        fprintf(stderr, "ERROR: Could not open the file '%s': %s\n", filename, strerror(errno));
+        fprintf(stderr, "ERROR: Could not open file '%s': %s\n", filename, strerror(errno));
         
         exit(EXIT_FAILURE);
     }
@@ -94,9 +94,9 @@ void load_cosmo_data(const char *filename) {
         int read_columns = fscanf(f, "%lf %lf %lf %lf %lf %lf", &cosmo_data[0][row], &cosmo_data[1][row], &cosmo_data[2][row], &cosmo_data[3][row], &cosmo_data[4][row], &cosmo_data[5][row]);
     
         if ( read_columns != COSMO_COLS ) {
-            fprintf(stderr, "ERROR: The provided cosmo-file does not have the expected number of rows and/or columns\n");
+            fprintf(stderr, "ERROR: Wrong number of columns/row in file '%s'\n", filename);
 
-            exit(1);
+            exit(80);
         }
 
         // Adapt the units (hbar in GeV s)
@@ -127,17 +127,17 @@ void free_cosmo_data() {
 
 double interp_cosmo_data(double x, int xc, int yc) {
     if ( !cosmo_data_loaded ) {
-        fprintf(stderr, "ERROR: Cannot interpolate data since no cosmo-file has been loaded\n");
+        fprintf(stderr, "ERROR: Cannot perform interpolation: data not initialized\n");
 
-        exit(1);
+        exit(83);
     }
 
     int ix = find_index(cosmo_data[xc], COSMO_ROWS, x);
 
     if ( ix == -1 || ix == COSMO_ROWS - 1 ) {
-        fprintf(stderr, "Cannot interpolate data: index out of range\n");
+        fprintf(stderr, "ERROR: Cannot perform interpolation: index out of range\n");
 
-        exit(1);
+        exit(84);
     }
 
     double x1 = cosmo_data[xc][ix], x2 = cosmo_data[xc][ix+1];
@@ -162,9 +162,9 @@ double time(double T) {
 
 double time_from_bisection(double T) {
     if ( !cosmo_data_loaded ) {
-        fprintf(stderr, "ERROR: Cannot calculate t(T) since no cosmo-file has been loaded\n");
+        fprintf(stderr, "ERROR: Cannot calculate t(T): data not initialized\n");
 
-        exit(1);
+        exit(85);
     }
 
     double logt_min = log(cosmo_data[COSMO_COL_t][0]);
@@ -187,9 +187,9 @@ double time_from_bisection(double T) {
         }
     }
 
-    fprintf(stderr, "ERROR: The bisection method to determine t(T) does not converge\n");
+    fprintf(stderr, "ERROR: Cannot calculate t(T): bisection method does not converge\n");
     
-    exit(1);
+    exit(86);
 
     return 0.;
 }
