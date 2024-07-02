@@ -8,9 +8,12 @@ Compile via
 ```
 and afterwards run with
 ```
-./bin/alteralterbbn <eta_1e10> <io_directory>
+./bin/alteralterbbn <io_directory>
 ```
-Here, all command-line arguments are optional and if any is not provided a default value is used.
+Here, the command-line argument ``<io_directory>`` is optional. In case it is not provided, ``io/sm``is used as default.
+
+## The paran-file
+``AlterAlterBBN`` expects a param-file with name ``param_file.dat`` in ``<io_directory>`` with at least one line that reads ``eta=<eta>``
 
 ## The cosmo-file
 ``AlterAlterBBN`` expects a cosmo-file with name ``cosmo_file.dat`` in ``<io_directory>`` with the same column structure and units as ``ACROPOLIS``, i.e.
