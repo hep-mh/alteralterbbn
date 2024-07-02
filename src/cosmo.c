@@ -72,7 +72,7 @@ int extract_line_number(const char *filename) {
 
 
 void load_cosmo_data(const char *filename) {
-    FILE* f = fopen(filename, "r");
+    FILE *f = fopen(filename, "r");
 
     if ( f == NULL ) {
         fprintf(stderr, "ERROR: Could not open the file '%s': %s\n", filename, strerror(errno));
