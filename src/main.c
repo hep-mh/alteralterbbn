@@ -82,9 +82,9 @@ int main(int argc, char **argv) {
     // Run the calculation
     double Y0m[NNUC+1], Y0h[NNUC+1],Y0l[NNUC+1];
     // -->
-    final_abundances(0, params, Y0m);
-    final_abundances(1, params, Y0h);
-    final_abundances(2, params, Y0l);
+    get_final_abundances(0, params, Y0m);
+    get_final_abundances(1, params, Y0h);
+    get_final_abundances(2, params, Y0l);
 
     // Free the cosmological data
     free_cosmo_data();

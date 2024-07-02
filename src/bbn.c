@@ -209,7 +209,7 @@ int linearize(double T, double reacparam[NNUCREAC+1][10], double f[NNUCREAC+1], 
 }
 
 
-int nucl(int err, Parameters params, double ratioH[NNUC+1]) {
+int run_nucleosynthesis(int err, Parameters params, double ratioH[NNUC+1]) {
     int i;
 
     double dY_dt0[NNUC+1], dY_dt[NNUC+1], Y0[NNUC+1], Y[NNUC+1];
@@ -523,12 +523,12 @@ int nucl(int err, Parameters params, double ratioH[NNUC+1]) {
 }
 
 
-void final_abundances(int err, Parameters params, double Y0[NNUC+1]) {
+void get_final_abundances(int err, Parameters params, double Y0[NNUC+1]) {
     // Define an array to store the ratios
     double ratioH[NNUC+1];
 
     // Run the BBN code
-    nucl(err, params, ratioH);
+    run_nucleosynthesis(err, params, ratioH);
 
     // Extract the baryon-to-photon ratio
     Y0[0] = ratioH[0];
