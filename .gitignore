@@ -2,7 +2,7 @@
 bin/*
 
 # Abundance files
-*abundance_file.dat*
+/io/*/abundance_file.dat
 *param_file.dat*
 
 # macOS files
