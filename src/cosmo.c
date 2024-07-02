@@ -8,14 +8,14 @@ int COSMO_ROWS;
 bool cosmo_data_loaded = false;
 
 
-SortOrder determine_sort_order(double *arr, int size) {
+SortOrder determine_sort_order(const double *arr, int size) {
     if (size < 2) return ASCENDING;
 
     return arr[0] < arr[1] ? ASCENDING : DESCENDING;
 }
 
 
-int find_index(double *arr, int size, double x) {
+int find_index(const double *arr, int size, double x) {
     if (size < 2) return -1; // Cannot determine position for arrays smaller than 2
 
     SortOrder order = determine_sort_order(arr, size);
@@ -42,7 +42,36 @@ int find_index(double *arr, int size, double x) {
 }
 
 
-void load_cosmo_data(char *filename, int nrows) {
+int extract_line_number(const char *filename) {
+    FILE *file = fopen(filename, "r");
+    if ( file == NULL ) {
+        perror("ERROR: Could not determine the number of lines in the provided cosmo-file:");
+        
+        exit(1);
+    }
+
+    long line_count = 0;
+
+    int c;
+    while ( (c = fgetc(file)) != EOF ) {
+        if (c == '\n') {
+            line_count++;
+        }
+    }
+
+    if ( ferror(file) ) {
+        perror("ERROR: Could not determine the number of lines in the provided cosmo-file:");
+
+        exit(1);
+    }
+
+    fclose(file);
+
+    return line_count;
+}
+
+
+void load_cosmo_data(const char *filename) {
     FILE* f = fopen(filename, "r");
 
     if ( f == NULL ) {
@@ -51,7 +80,8 @@ void load_cosmo_data(char *filename, int nrows) {
         exit(1);
     }
 
-    COSMO_ROWS = nrows;
+    // Read the number of lines in the cosmo-file
+    COSMO_ROWS = extract_line_number(filename);
 
     // Allocate space for the cosmo_data array
     cosmo_data = malloc( COSMO_COLS * sizeof(double*) );

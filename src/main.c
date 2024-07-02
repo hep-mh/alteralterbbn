@@ -29,8 +29,14 @@ bool compare_rates(int err, struct parameters params, double Tmin, double Tmax, 
         rate_all_test(err, f2, T);
 
         for ( int i = 1; i <= 100; ++i ) {
-            if ( f1[i] != f2[i] || r1[i] != r2[i] ) {
-                printf("%d %.6e %.6e %.6e %.6e\n", i, f1[i], f2[i], r1[i], r2[i]);
+            if ( f1[i] != f2[i] ) {
+                printf("f: %d %.6e\n", i, fabs(f1[i]-f2[i])/f1[i]);
+
+                all_equal = false;
+            }
+
+            if ( r1[i] != r2[i] ) {
+                printf("r: %d %.6e\n", i, fabs(r1[i]-r2[i])/r1[i]);
 
                 all_equal = false;
             }
@@ -45,16 +51,14 @@ int main(int argc, char **argv) {
     // Default parameters
     double eta            = 6.137;
     char  *cosmo_file     = "data/sm_cosmo_file.dat";
-    int    clines         = 6174;
     char  *abundance_file = "";
 
     // Parse the command-line arguments
-    if ( argc >= 5 ) {
+    if ( argc >= 4 ) {
         abundance_file = argv[4];
     }
 
-    if ( argc >= 4 ) {
-        sscanf(argv[3], "%d", &clines);
+    if ( argc >= 3 ) {
         cosmo_file = argv[2];
     }
 
@@ -71,7 +75,7 @@ int main(int argc, char **argv) {
     params.decay_neutrons = true;
 
     // Read the cosmo-file
-    load_cosmo_data(cosmo_file, clines);
+    load_cosmo_data(cosmo_file);
 
     // Testing
     if ( false ) for ( int err = 0; err <= 2; err++ ) compare_rates(err, params, 1e-5, 1e10, 100000);

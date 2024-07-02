@@ -50,9 +50,10 @@ extern bool cosmo_data_loaded;
 
 typedef enum { ASCENDING, DESCENDING } SortOrder;
 
-SortOrder determine_sort_order(double *arr, int size);
-int       find_index(double *arr, int size, double x);
-void      load_cosmo_data(char *filename, int ncols);
+SortOrder determine_sort_order(const double *arr, int size);
+int       find_index(const double *arr, int size, double x);
+int       extract_line_number(const char *filename);
+void      load_cosmo_data(const char *filename);
 void      free_cosmo_data();
 double    interp_cosmo_data(double x, int xc, int yc);
 // -->

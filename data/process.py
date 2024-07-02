@@ -3,7 +3,7 @@ import numpy as np
 # matplotlib
 import matplotlib.pyplot as plt
 
-hbar = 6.582119514e-25
+hbar = 6.582119514e-25 # GeV s
 
 data = np.loadtxt("sm_cosmo_file_old.dat")
 
