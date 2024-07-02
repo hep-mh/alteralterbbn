@@ -49,8 +49,8 @@ typedef enum { ASCENDING, DESCENDING } SortOrder;
 
 // cosmo.c //////////////////////////////////////////////////////////////////////////////
 extern double **cosmo_data;
-extern int COSMO_ROWS;
-extern bool cosmo_data_loaded;
+extern int      COSMO_ROWS;
+extern bool     cosmo_data_loaded;
 
 SortOrder determine_sort_order(const double *arr, int size);
 int       find_index(const double *arr, int size, double x);

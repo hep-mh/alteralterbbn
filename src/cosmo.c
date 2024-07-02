@@ -135,7 +135,7 @@ double interp_cosmo_data(double x, int xc, int yc) {
     int ix = find_index(cosmo_data[xc], COSMO_ROWS, x);
 
     if ( ix == -1 || ix == COSMO_ROWS - 1 ) {
-        fprintf(stderr, "ERROR: Cannot perform interpolation: index out of range\n");
+        fprintf(stderr, "ERROR: Cannot perform interpolation: index out of range for x = %.3e\n", x);
 
         exit(84);
     }
