@@ -106,6 +106,9 @@ void load_cosmo_data(const char *filename) {
         cosmo_data[3][row] *= 1e-3;      // MeV   --> GeV
         cosmo_data[4][row] *= 1e-3/hbar; // MeV   --> 1/s
         cosmo_data[5][row] *= 1e-9;      // MeV^3 ---> GeV^3
+
+        // Consume the rest of the line
+        fscanf(f, "%*[^\n]\n");
     }
 
     fclose(f);
