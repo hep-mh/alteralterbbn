@@ -3,9 +3,9 @@ import numpy as np
 # matplotlib
 import matplotlib.pyplot as plt
 
-hbar = 6.582119514e-25 # GeV s
+hbar = 6.582119569e-25 # GeV s
 
-data = np.loadtxt("sm_cosmo_file_old.dat")
+data = np.loadtxt("sm_cosmo_file_original.dat")
 
 t    = data[:,0]
 T    = data[:,1]
