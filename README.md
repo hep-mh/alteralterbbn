@@ -14,24 +14,25 @@ Here, the command-line argument ``<io_directory>`` is optional. In case it is no
 
 An example output would be
 ```
-INFO: Using 'io/sm' to read and write data
-INFO: Using eta = 6.13700e-10 from 'io/sm/param_file.dat'
-INFO: Using cosmological data from 'io/sm/cosmo_file.dat'
-INFO: Running nucleosynthesis...Done!
-INFO: The final abundances are:
+INFO   : Using 'io/sm' to read and write data
+INFO   : Using eta = 6.13700e-10 from 'io/sm/param_file.dat'
+INFO   : Using cosmological data from 'io/sm/cosmo_file.dat'
+INFO   : Running nucleosynthesis...Done!
+INFO   : The final abundances are:
 
-mean         high         low
-0.000000e+00 0.000000e+00 0.000000e+00
-7.532623e-01 7.533308e-01 7.531942e-01
-1.882976e-05 1.842939e-05 1.924010e-05
-6.028483e-08 5.846802e-08 6.218854e-08
-7.718020e-06 7.778272e-06 7.663938e-06
-6.166916e-02 6.165221e-02 6.168603e-02
-8.273446e-15 2.691357e-14 1.282042e-15
-2.201507e-11 2.229536e-11 2.161805e-11
-3.765606e-10 4.021328e-10 3.532401e-10
+     |     mean     |     high     |     low
+--------------------------------------------
+   n | 0.000000e+00 | 0.000000e+00 | 0.000000e+00
+   p | 7.532623e-01 | 7.533308e-01 | 7.531942e-01
+  H2 | 1.882976e-05 | 1.842939e-05 | 1.924010e-05
+  H3 | 6.028483e-08 | 5.846802e-08 | 6.218854e-08
+ He3 | 7.718020e-06 | 7.778272e-06 | 7.663938e-06
+ He4 | 6.166916e-02 | 6.165221e-02 | 6.168603e-02
+ Li6 | 8.273446e-15 | 2.691357e-14 | 1.282042e-15
+ Li7 | 2.201507e-11 | 2.229536e-11 | 2.161805e-11
+ Be7 | 3.765606e-10 | 4.021328e-10 | 3.532401e-10
 
-INFO: The final abundances have been written to 'io/sm/abundance_file.dat'
+INFO   : The final abundances have been written to 'io/sm/abundance_file.dat'
 ```
 
 ## The param-file

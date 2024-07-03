@@ -114,10 +114,10 @@ int main(int argc, char **argv) {
     };
 
     printf("%s The final abundances are:\n", INFO);
-    printf("\n    |     mean     |     high     |     low\n");
-    printf("-------------------------------------------\n");
+    printf("\n     |     mean     |     high     |     low\n");
+    printf("--------------------------------------------\n");
     for ( int i = 1; i < 10; i++ ) {
-        printf("%s | %.6e | %.6e | %.6e\n", Ystr[i-1], Y0m[i], Y0h[i], Y0l[i]);
+        printf(" %s | %.6e | %.6e | %.6e\n", Ystr[i-1], Y0m[i], Y0h[i], Y0l[i]);
     }
     printf("\n");
 
