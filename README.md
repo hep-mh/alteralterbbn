@@ -16,9 +16,9 @@ An example output would be
 ```
 AlterAlterBBN v2.0
 
-INFO   : Using 'io/sm' to read and write data
-INFO   : Using eta = 6.13700e-10 from 'io/sm/param_file.dat'
-INFO   : Using cosmological data from 'io/sm/cosmo_file.dat'
+INFO   : Using 'io/sm' to read and write data.
+INFO   : Using eta = 6.13700e-10 from 'io/sm/param_file.dat'.
+INFO   : Using cosmological data from 'io/sm/cosmo_file.dat'.
 INFO   : Running nucleosynthesis...Done!
 INFO   : The final abundances are:
 
@@ -34,7 +34,7 @@ INFO   : The final abundances are:
  Li7 | 2.201507e-11 | 2.229536e-11 | 2.161805e-11
  Be7 | 3.765606e-10 | 4.021328e-10 | 3.532401e-10
 
-INFO   : The final abundances have been written to 'io/sm/abundance_file.dat'
+INFO   : The final abundances have been written to 'io/sm/abundance_file.dat'.
 ```
 
 ## The param-file

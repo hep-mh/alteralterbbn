@@ -68,7 +68,7 @@ int main(int argc, char **argv) {
     if ( argc >= 2 ) {
         io_directory = argv[1];
     }
-    printf("%s Using '%s' to read and write data\n", INFO, io_directory);
+    printf("%s Using '%s' to read and write data.\n", INFO, io_directory);
 
     // -->
     char *cosmo_file_name     = join_strings(io_directory, "/cosmo_file.dat");
@@ -78,9 +78,9 @@ int main(int argc, char **argv) {
     // Load the baryon-to-photon ratio
     double eta = load_eta(param_file_name);
     if ( eta == -1 ) {
-        fprintf(stderr, "%s Could not extract the value of eta from '%s'\n", ERROR, param_file_name);
+        fprintf(stderr, "%s Could not extract the value of eta from '%s'.\n", ERROR, param_file_name);
     }
-    printf("%s Using eta = %.5e from '%s'\n", INFO, eta, param_file_name);
+    printf("%s Using eta = %.5e from '%s'.\n", INFO, eta, param_file_name);
 
     // Set the relevant parameters for BBN
     Parameters params;
@@ -91,7 +91,7 @@ int main(int argc, char **argv) {
 
     // Load the cosmological data
     load_cosmo_data(cosmo_file_name);
-    printf("%s Using cosmological data from '%s'\n", INFO, cosmo_file_name);
+    printf("%s Using cosmological data from '%s'.\n", INFO, cosmo_file_name);
 
     // Testing
     if ( false ) for ( int err = 0; err <= 2; err++ ) compare_rates(err, params, 1e-5, 1e10, 100000);
@@ -129,7 +129,7 @@ int main(int argc, char **argv) {
     FILE *abundance_file = fopen(abundance_file_name, "w");
 
     if ( abundance_file == NULL ) {
-        fprintf(stderr, "%s Could not open the file '%s': %s\n", ERROR, abundance_file_name, strerror(errno));
+        fprintf(stderr, "%s Could not open the file '%s': %s.\n", ERROR, abundance_file_name, strerror(errno));
 
         exit(EXIT_FAILURE);
     }
@@ -140,7 +140,7 @@ int main(int argc, char **argv) {
 
     fclose(abundance_file);
 
-    printf("%s The final abundances have been written to '%s'\n", INFO, abundance_file_name);
+    printf("%s The final abundances have been written to '%s'.\n", INFO, abundance_file_name);
 
 
     return 0;
