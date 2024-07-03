@@ -14,6 +14,8 @@ Here, the command-line argument ``<io_directory>`` is optional. In case it is no
 
 An example output would be
 ```
+AlterAlterBBN v2.0
+
 INFO   : Using 'io/sm' to read and write data
 INFO   : Using eta = 6.13700e-10 from 'io/sm/param_file.dat'
 INFO   : Using cosmological data from 'io/sm/cosmo_file.dat'
@@ -21,7 +23,7 @@ INFO   : Running nucleosynthesis...Done!
 INFO   : The final abundances are:
 
      |     mean     |     high     |     low
---------------------------------------------
+-------------------------------------------------
    n | 0.000000e+00 | 0.000000e+00 | 0.000000e+00
    p | 7.532623e-01 | 7.533308e-01 | 7.531942e-01
   H2 | 1.882976e-05 | 1.842939e-05 | 1.924010e-05
