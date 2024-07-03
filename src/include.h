@@ -47,6 +47,13 @@ typedef struct {
 typedef enum { ASCENDING, DESCENDING } SortOrder;
 
 
+// main.c ///////////////////////////////////////////////////////////////////////////////
+extern const bool use_color;
+
+extern const char *INFO;
+extern const char *ERROR;
+
+
 // cosmo.c //////////////////////////////////////////////////////////////////////////////
 extern double **cosmo_data;
 extern int      COSMO_ROWS;

@@ -1,6 +1,16 @@
 #include "include.h"
 
 
+#ifdef NO_COLOR
+const bool use_color = false;
+#else
+const bool use_color = true;
+#endif
+
+const char *INFO  = ( use_color ) ? "\x1B[1;32mINFO   \x1B[0m:" : "INFO   :";
+const char *ERROR = ( use_color ) ? "\x1B[1;31mERROR  \x1B[0m:" : "ERROR  :";
+
+
 bool compare_rates(int err, Parameters params, double Tmin, double Tmax, int N) {
     bool all_equal = true;
 
@@ -55,7 +65,7 @@ int main(int argc, char **argv) {
     if ( argc >= 2 ) {
         io_directory = argv[1];
     }
-    printf("INFO: Using '%s' to read and write data\n", io_directory);
+    printf("%s Using '%s' to read and write data\n", INFO, io_directory);
 
     // -->
     char *cosmo_file_name     = join_strings(io_directory, "/cosmo_file.dat");
@@ -67,7 +77,7 @@ int main(int argc, char **argv) {
     if ( eta == -1 ) {
         fprintf(stderr, "ERROR: Could not extract the value of eta from '%s'\n", param_file_name);
     }
-    printf("INFO: Using eta = %.5e from '%s'\n", eta, param_file_name);
+    printf("%s Using eta = %.5e from '%s'\n", INFO, eta, param_file_name);
 
     // Set the relevant parameters for BBN
     Parameters params;
@@ -78,13 +88,13 @@ int main(int argc, char **argv) {
 
     // Load the cosmological data
     load_cosmo_data(cosmo_file_name);
-    printf("INFO: Using cosmological data from '%s'\n", cosmo_file_name);
+    printf("%s Using cosmological data from '%s'\n", INFO, cosmo_file_name);
 
     // Testing
     if ( false ) for ( int err = 0; err <= 2; err++ ) compare_rates(err, params, 1e-5, 1e10, 100000);
 
     // Run the calculation
-    printf("INFO: Running nucleosynthesis...");
+    printf("%s Running nucleosynthesis...", INFO);
     fflush(stdout);
 
     double Y0m[NNUC+1], Y0h[NNUC+1],Y0l[NNUC+1];
@@ -99,10 +109,15 @@ int main(int argc, char **argv) {
     free_cosmo_data();
 
     // Print the results to the screen
-    printf("INFO: The final abundances are:\n");
-    printf("\nmean         high         low\n");
+    const char *Ystr[9] = {
+        "  n", "  p", " H2", " H3", "He3", "He4", "Li6", "Li7", "Be7"
+    };
+
+    printf("%s The final abundances are:\n", INFO);
+    printf("\n    |     mean     |     high     |     low\n");
+    printf("-------------------------------------------\n");
     for ( int i = 1; i < 10; i++ ) {
-        printf("%.6e %.6e %.6e\n", Y0m[i], Y0h[i], Y0l[i]);
+        printf("%s | %.6e | %.6e | %.6e\n", Ystr[i-1], Y0m[i], Y0h[i], Y0l[i]);
     }
     printf("\n");
 
@@ -122,7 +137,7 @@ int main(int argc, char **argv) {
 
     fclose(abundance_file);
 
-    printf("INFO: The final abundances have been written to '%s'\n", abundance_file_name);
+    printf("%s The final abundances have been written to '%s'\n", INFO, abundance_file_name);
 
 
     return 0;
