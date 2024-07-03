@@ -41,12 +41,12 @@ INFO   : The final abundances have been written to 'io/sm/abundance_file.dat'.
 ``AlterAlterBBN`` expects a param-file with name ``param_file.dat`` in ``<io_directory>`` with at least one line that reads ``eta=<eta>``, e.g. ``eta=6.137e-10``
 
 ## The cosmo-file
-``AlterAlterBBN`` expects a cosmo-file with name ``cosmo_file.dat`` in ``<io_directory>`` with the same column structure and units as ``ACROPOLIS``, i.e.
-* time in s
-* temperature in MeV
+``AlterAlterBBN`` expects a cosmo-file with name ``cosmo_file.dat`` in ``<io_directory>`` with the column structure
+* t in s
+* T in MeV
 * dTdt in MeV²
-* neutrino temperature in MeV
-* hubble rate in MeV
-* nb/eta final ratio in MeV³
+* Tnu in MeV
+* H in MeV
+* nb/etaf in MeV³
 
 Note that this is different from how the original version of ``AlterAlterBBN`` handled the cosmo-file!
