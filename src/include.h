@@ -10,7 +10,7 @@
 
 // Physical parameters
 #define pi      3.1415926535897932385  // --
-#define hbar    6.582119514e-25        // GeV s
+#define hbar    6.582119569e-25        // GeV s
 #define M_amu   0.931494               // GeV, atomic mass unit
 #define m_e     510.9989461e-6         // GeV
 #define k_B     8.617330e-5            // GeV/GK
