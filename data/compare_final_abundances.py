@@ -7,4 +7,4 @@ a2 = np.loadtxt("../io/v2.2/abundance_file.dat")
 
 d = np.abs(a1[1:,:]-a2[1:,:])/a1[1:,:]
 
-print(d)
+print(d, np.max(d))

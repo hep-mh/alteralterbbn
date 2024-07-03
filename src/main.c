@@ -75,7 +75,7 @@ int main(int argc, char **argv) {
     // Load the baryon-to-photon ratio
     double eta = load_eta(param_file_name);
     if ( eta == -1 ) {
-        fprintf(stderr, "ERROR: Could not extract the value of eta from '%s'\n", param_file_name);
+        fprintf(stderr, "%s Could not extract the value of eta from '%s'\n", ERROR, param_file_name);
     }
     printf("%s Using eta = %.5e from '%s'\n", INFO, eta, param_file_name);
 
@@ -126,7 +126,7 @@ int main(int argc, char **argv) {
     FILE *abundance_file = fopen(abundance_file_name, "w");
 
     if ( abundance_file == NULL ) {
-        fprintf(stderr, "ERROR: Could not open the file '%s': %s\n", abundance_file_name, strerror(errno));
+        fprintf(stderr, "%s Could not open the file '%s': %s\n", ERROR, abundance_file_name, strerror(errno));
 
         exit(EXIT_FAILURE);
     }

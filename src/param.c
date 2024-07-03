@@ -8,8 +8,9 @@ double load_eta(const char *filename) {
 
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
-        perror("Error opening file");
-        return EXIT_FAILURE;
+        fprintf(stderr, "%s Could not open file '%s': %s\n", ERROR, filename, strerror(errno));
+        
+        exit(EXIT_FAILURE);
     }
 
     double eta = -1;
