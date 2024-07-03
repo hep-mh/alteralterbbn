@@ -12,11 +12,11 @@ and afterwards run with
 ```
 Here, the command-line argument ``<io_directory>`` is optional. In case it is not provided, ``io/sm`` is used as default.
 
-An example output would be
+An example output of running ``./bin/alteralterbbn`` would be
 ```
 AlterAlterBBN v2.0
 
-INFO   : Using 'io/sm' to read and write data.
+INFO   : Using the directory 'io/sm' to read and write data.
 INFO   : Using eta = 6.13700e-10 from 'io/sm/param_file.dat'.
 INFO   : Using cosmological data from 'io/sm/cosmo_file.dat'.
 INFO   : Running nucleosynthesis...Done!

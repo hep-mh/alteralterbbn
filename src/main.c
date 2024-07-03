@@ -68,7 +68,7 @@ int main(int argc, char **argv) {
     if ( argc >= 2 ) {
         io_directory = argv[1];
     }
-    printf("%s Using '%s' to read and write data.\n", INFO, io_directory);
+    printf("%s Using the directory '%s' to read and write data.\n", INFO, io_directory);
 
     // -->
     char *cosmo_file_name     = join_strings(io_directory, "/cosmo_file.dat");
