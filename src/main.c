@@ -58,6 +58,9 @@ bool compare_rates(int err, Parameters params, double Tmin, double Tmax, int N) 
 
 
 int main(int argc, char **argv) {
+    const char *header = ( use_color ) ? "\x1B[38;5;209mAlterAlterBBN v2.0\x1B[0m" : "AlterAlterBBN v2.0";
+    printf("%s\n\n", header);
+
     // Default parameters
     char *io_directory = "io/sm";
 
