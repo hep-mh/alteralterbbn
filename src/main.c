@@ -117,10 +117,10 @@ int main(int argc, char **argv) {
     };
 
     printf("%s The final abundances are:\n", INFO);
-    printf("\n     |     mean     |     high     |     low\n");
+    printf("\n     |     \x1B[35mmean\x1B[0m     |     \x1B[35mhigh\x1B[0m     |     \x1B[35mlow\x1B[0m\n");
     printf("-------------------------------------------------\n");
     for ( int i = 1; i < 10; i++ ) {
-        printf(" %s | %.6e | %.6e | %.6e\n", Ystr[i-1], Y0m[i], Y0h[i], Y0l[i]);
+        printf(" \x1B[34m%s\x1B[0m | %.6e | %.6e | %.6e\n", Ystr[i-1], Y0m[i], Y0h[i], Y0l[i]);
     }
     printf("\n");
 
