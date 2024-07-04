@@ -358,7 +358,7 @@ int run_nucleosynthesis(int err, Parameters params, double ratioH[NNUC+1]) {
     double cy  = 0.1;     // Limiting value of dY/dt
     double ct  = 0.005;   // Limiting value of dT/dt
     double dt0 = 1.e-4;   // CHANGED: 1e-10
-    int nitmax = 10000;   // CHANGED: 100
+    int nitmax = 50000;   // CHANGED: 100
      
     int fail = 0;
 
