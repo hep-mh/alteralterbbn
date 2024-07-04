@@ -1,8 +1,14 @@
 # Binary files
 bin/*
 
+# Legacy data files
+/data/*
+
 # Abundance- and param-files
 /io/*/abundance_file.dat
+
+# Test files
+/io/test
 
 # macOS files
 .DS_Store
