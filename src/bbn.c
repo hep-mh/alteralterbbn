@@ -348,7 +348,7 @@ int run_nucleosynthesis(int err, Parameters params, double ratioH[NNUC+1]) {
     
     };
 
-    int inc   = 100; // old: 50
+    int inc   = 50; // CHANGED: 100
     int ltime = 0;
     int is    = 1;
     int ip    = inc;
@@ -357,7 +357,7 @@ int run_nucleosynthesis(int err, Parameters params, double ratioH[NNUC+1]) {
     // Values corresponding to 'failsafe = 2'
     double cy  = 0.1;     // Limiting value of dY/dt
     double ct  = 0.005;   // Limiting value of dT/dt
-    double dt0 = 1.e-10;  // old: 1e-4
+    double dt0 = 1.e-4;   // CHANGED: 1e-10
     int nitmax = 10000;   // CHANGED: 100
      
     int fail = 0;
@@ -478,10 +478,11 @@ int run_nucleosynthesis(int err, Parameters params, double ratioH[NNUC+1]) {
                     dt = dtmin;
                 }
 
+                // CHANGED:
                 // Enforce a minimal time step
-                // if ( dt/t < 5.0e-4 ) {
-                //     dt = 5.0e-4*t;
-                // }
+                if ( dt/t < 5.0e-4 ) {
+                    dt = 5.0e-4*t;
+                }
 
                 // Adapt the time
                 t += dt;
