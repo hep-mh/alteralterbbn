@@ -137,10 +137,20 @@ double interp_cosmo_data(double x, int xc, int yc) {
 
     int ix = find_index(cosmo_data[xc], COSMO_ROWS, x);
 
-    if ( ix == -1 || ix == COSMO_ROWS - 1 ) {
+    if ( ix == -1 ) {
         fprintf(stderr, "%s Cannot perform interpolation: index out of range for x = %.3e.\n", ERROR, x);
 
         exit(84);
+    }
+
+    bool is_between = ( cosmo_data[xc][ix] <= x && x <= cosmo_data[xc][ix+1] ) ||
+                     ( cosmo_data[xc][ix] >= x && x >= cosmo_data[xc][ix+1] );
+    // Check if ix has the desired properties
+    if ( ix > COSMO_ROWS - 2 || !is_between ) {
+        printf("%lf %lf %lf", x,cosmo_data[xc][ix], cosmo_data[xc][ix+1]);
+        fprintf(stderr, "%s Could not find i such that x is between x[i] and x[i+1]\n", ERROR);
+
+        exit(85);
     }
 
     double x1 = cosmo_data[xc][ix], x2 = cosmo_data[xc][ix+1];
