@@ -1,7 +1,7 @@
 #include "include.h"
 
 
-int linearize(double T, double reacparam[NNUCREAC+1][10], double f[NNUCREAC+1], double r[NNUCREAC+1], int loop, int inc, int ip, double dt, double Y0[NNUC+1], double Y[NNUC+1], double dY_dt[NNUC+1], double rhob) {    
+int linearize(double T9, double reacparam[NNUCREAC+1][10], double f[NNUCREAC+1], double r[NNUCREAC+1], int loop, int inc, int ip, double dt, double Y0[NNUC+1], double Y[NNUC+1], double dY_dt[NNUC+1], double rhob) {    
     int i, j, g, h, k, l, n, ind, rn1, rn2, rn3, rn4, rn5, rn6;
     double cn1, cn2, cn3, cn4, cn5, cn6;
     double yY[NNUC+1];
@@ -48,7 +48,7 @@ int linearize(double T, double reacparam[NNUCREAC+1][10], double f[NNUCREAC+1], 
             rn2 = (ind%100000-1000*rn3-100*rn4-10*rn5-rn6)/10000;
             rn1 = (ind-10000*rn2-1000*rn3-100*rn4-10*rn5-rn6)/100000;
             
-            if ( ind != 100001 ) r[n]=rev[n]*pow(rhob,rn4+rn5+rn6-1.)*pow(0.987e10*pow(T,1.5),rn1+rn2+rn3-rn4-rn5-rn6)*exp(-q9[n]/T)*f[n];
+            if ( ind != 100001 ) r[n]=rev[n]*pow(rhob,rn4+rn5+rn6-1.)*pow(0.987e10*pow(T9,1.5),rn1+rn2+rn3-rn4-rn5-rn6)*exp(-q9[n]/T9)*f[n];
             f[n] = pow(rhob,rn1+rn2+rn3-1.)*f[n];
             cn1 = (rn1*pow(Y[i],rn1-1.)*pow(Y[j],rn2)*pow(Y[g],rn3))/((rn1+rn2+rn3)*factorial(rn1)*factorial(rn2)*factorial(rn3))*f[n]*dt;
             if ( rn2== 0 ) cn2 = 0.; else cn2 = (rn2*pow(Y[j],rn2-1.)*pow(Y[i],rn1)*pow(Y[g],rn3))/((rn1+rn2+rn3)*factorial(rn1)*factorial(rn2)*factorial(rn3))*f[n]*dt;

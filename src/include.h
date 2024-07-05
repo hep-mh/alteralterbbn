@@ -15,7 +15,7 @@
 #define m_e     510.9989461e-6         // GeV
 #define k_B     8.617330e-5            // GeV/GK
 #define alphaem 0.007297353            // --
-#define dMpn    15.009288310184841     // GeV, mass difference of proton and neutron
+#define dMpn    15.009288310184841     // GK, mass difference of proton and neutron
 
 // Parameters for unit conversions
 #define GeV_to_GK    11604.52165624311
