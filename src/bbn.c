@@ -355,16 +355,16 @@ int run_nucleosynthesis(int err, Parameters params, double ratioH[NNUC+1]) {
     int it    = 0;
 
     // Values corresponding to 'failsafe = 2'
-    double cy  = 0.1;     // Limiting value of dY/dt
-    double ct  = 0.005;   // Limiting value of dT/dt
-    double dt0 = 1.e-4;   // CHANGED: 1e-10
-    int nitmax = 50000;   // CHANGED: 100
+    double cy  = 0.1;   // Limiting value of dY/dt
+    double ct  = 0.005; // Limiting value of dT/dt
+    double dt0 = 1.e-4; // CHANGED: 1e-10
+    int nitmax = 50000; // CHANGED: 100
      
     int fail = 0;
 
     // Different values require also changing nitmax
-    double T9i = 100.; // Initial temperature, default: 27, ~ 8.6 MeV
-    double T9f = 0.01; // Final temperature                 ~ 0.9 keV
+    double T9i = 100.;  // Initial temperature, default: 27, ~ 8.6 MeV
+    double T9f = 0.01;  // Final temperature                 ~ 0.9 keV
     // -->
     // Initialize the temperatures for the loop
     double T9   = T9i;
