@@ -363,7 +363,7 @@ int run_nucleosynthesis(int err, Parameters params, double ratioH[NNUC+1]) {
     int fail = 0;
 
     // Different values require also changing nitmax
-    double T9i = 100.; // Initial temperature, default: 27
+    double T9i = 50.;  // Initial temperature, default: 27
     double T9f = 0.01; // Final temperature
     // -->
     // Initialize the temperatures for the loop
