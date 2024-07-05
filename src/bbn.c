@@ -451,7 +451,7 @@ int run_nucleosynthesis(int err, Parameters params, double ratioH[NNUC+1]) {
                 ratioH[6] = Y[6]*Am[6]; // Am[6] = 4
             }
 
-            if (  loop == 1 ) {
+            if ( loop == 1 ) {
                 // Determine the next time step dt
                 if ( ip == inc ) ip = 0;
 
