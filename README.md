@@ -1,6 +1,11 @@
 # AlterAlterBBN
 A modified (altered) version of ``AlterBBN`` (https://alterbbn.hepforge.org/) that can be used to calculate BBN constraints for a broader class of BSM scenarios.
 
+| Input          | Output             |
+| -------------- | ------------------ |
+| param_file.dat | abundance_file.dat |
+| cosmo_file.dat |                    |
+
 ## How to compile and run
 Compile via
 ```
