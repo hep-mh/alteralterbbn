@@ -1,5 +1,5 @@
 # AlterAlterBBN
-A modified (altered) version of AlterBBN (https://alterbbn.hepforge.org/) that can be used for a broader class of BSM scenarios.
+A modified (altered) version of ``AlterBBN`` (https://alterbbn.hepforge.org/) that can be used to calculate BBN constraints for a broader class of BSM scenarios.
 
 ## How to compile and run
 Compile via
