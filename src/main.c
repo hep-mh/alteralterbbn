@@ -135,7 +135,7 @@ int main(int argc, char **argv) {
     }
 
     for ( int i = 1; i < 10; i++ ) {
-        fprintf(abundance_file, "%.6e %.6e %.6e\n", Y0m[i], Y0h[i], Y0l[i]);
+        fprintf(abundance_file, "%.12e %.12e %.12e\n", Y0m[i], Y0h[i], Y0l[i]);
     }
 
     fclose(abundance_file);
