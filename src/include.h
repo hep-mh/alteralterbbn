@@ -67,7 +67,6 @@ void      free_cosmo_data();
 double    interp_cosmo_data(double x, int xc, int yc);
 // -->
 double    time(double T);
-double    time_from_bisection(double T);
 double    temperature(double t);
 double    neutrino_temperature(double t);
 double    dTdt(double t);

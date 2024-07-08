@@ -172,39 +172,39 @@ double time(double T) {
 }
 
 
-double time_from_bisection(double T) {
-    if ( !cosmo_data_loaded ) {
-        fprintf(stderr, "%s Cannot calculate t(T): data not initialized.\n", ERROR);
+// double time_from_bisection(double T) {
+//     if ( !cosmo_data_loaded ) {
+//         fprintf(stderr, "%s Cannot calculate t(T): data not initialized.\n", ERROR);
 
-        exit(85);
-    }
+//         exit(85);
+//     }
 
-    double logt_min = log(cosmo_data[COSMO_COL_t][0]);
-    double logt_max = log(cosmo_data[COSMO_COL_t][COSMO_ROWS-1]);
+//     double logt_min = log(cosmo_data[COSMO_COL_t][0]);
+//     double logt_max = log(cosmo_data[COSMO_COL_t][COSMO_ROWS-1]);
 
-    double eps = 1e-5;
-    int N_itermax = 100;
-    double logt_tmp, T_tmp;
+//     double eps = 1e-5;
+//     int N_itermax = 100;
+//     double logt_tmp, T_tmp;
 
-    for( int i = 0; i < N_itermax; i++ ) {
-        logt_tmp = 0.5*(logt_min + logt_max);
-        T_tmp = temperature(exp(logt_tmp));
-        if ( fabs((T - T_tmp)/T) < eps ) {
-            return exp(logt_tmp);
-        }
-        if ( T_tmp > T ) {
-            logt_min = logt_tmp;
-        } else {
-            logt_max = logt_tmp;
-        }
-    }
+//     for( int i = 0; i < N_itermax; i++ ) {
+//         logt_tmp = 0.5*(logt_min + logt_max);
+//         T_tmp = temperature(exp(logt_tmp));
+//         if ( fabs((T - T_tmp)/T) < eps ) {
+//             return exp(logt_tmp);
+//         }
+//         if ( T_tmp > T ) {
+//             logt_min = logt_tmp;
+//         } else {
+//             logt_max = logt_tmp;
+//         }
+//     }
 
-    fprintf(stderr, "%s Cannot calculate t(T): bisection method does not converge.\n", ERROR);
+//     fprintf(stderr, "%s Cannot calculate t(T): bisection method does not converge.\n", ERROR);
     
-    exit(86);
+//     exit(86);
 
-    return 0.;
-}
+//     return 0.;
+// }
 
 
 double temperature(double t) {
