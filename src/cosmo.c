@@ -117,7 +117,7 @@ void load_cosmo_data(const char *filename) {
 }
 
 
-void free_cosmo_data() {
+void free_cosmo_data(void) {
     for (int col = 0; col < COSMO_COLS; col++ ) {
         free(cosmo_data[col]);
     }
