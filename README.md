@@ -47,11 +47,11 @@ INFO   : The final abundances have been written to 'io/sm/abundance_file.dat'.
 
 ## The cosmo-file
 ``AlterAlterBBN`` expects a cosmo-file with name ``cosmo_file.dat`` in ``<io_directory>`` with the column structure
-* t in s
-* T in MeV
-* dTdt in MeV²
-* Tnu in MeV
-* H in MeV
-* nb/etaf in MeV³
+* ``t`` in s
+* ``T`` in MeV
+* ``dTdt`` in MeV²
+* ``Tnu`` in MeV
+* ``H`` in MeV
+* ``nb_etaf`` in MeV³
 
 Note that this is different from how the original version of ``AlterAlterBBN`` handled the cosmo-file!
