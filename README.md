@@ -1,4 +1,7 @@
 # AlterAlterBBN
+
+![Language: C](https://img.shields.io/badge/Language-C-%23EEEEEE.svg?style=flat-square)
+
 A modified (altered) version of ``AlterBBN`` (https://alterbbn.hepforge.org/) that can be used to calculate BBN constraints for a broader class of BSM scenarios.
 
 | Input          | Output             |
