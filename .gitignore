@@ -1,15 +1,16 @@
 # Binary files
 bin/*
 
+# .gitkeep files
+!.gitkeep
+
 # Legacy data files
-/data/*
+/data.tar.xz
 
-# Abundance- and param-files
-/io/*/abundance_file.dat
-
-# Test files
-/io/test/*
-/io/v2.2/*
+# Output files
+/io/*/*.dat
+!/io/sm/cosmo_file.dat
+!/io/sm/param_file.dat
 
 # macOS files
 .DS_Store
